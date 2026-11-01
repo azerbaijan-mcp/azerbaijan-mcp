@@ -21,6 +21,7 @@ CACHE_SIZE = 256
 RETRY_DELAY = 0.5
 REDIRECT_CODES = {301, 302, 303, 307, 308}
 BLOCKED_CODES = {403, 429}
+NETWORK_ERRORS = (httpx.RequestError, httpx.InvalidURL)
 FACET_FIELDS = '["organization","groups","license_id","res_format"]'
 
 
@@ -139,7 +140,7 @@ class OpenDataClient:
             await self._throttle(host)
             try:
                 response = await self._client().get(url, params=params)
-            except httpx.TransportError as exc:
+            except NETWORK_ERRORS as exc:
                 error: Exception = exc
             else:
                 if response.status_code == 404:
@@ -222,7 +223,7 @@ class OpenDataClient:
                     if response.status_code >= 400:
                         raise PortalError(f"The file's host answered HTTP {response.status_code}.")
                     return await self._read(response)
-            except httpx.TransportError as exc:
+            except NETWORK_ERRORS as exc:
                 raise PortalError(f"The file could not be fetched: {type(exc).__name__}.") from exc
         raise PortalError("The file redirects too many times.")
 

@@ -31,6 +31,15 @@ Things worth knowing:
 - The `author` and `maintainer` fields of a dataset, which hold names and e-mail addresses, are never
   returned.
 
+## What the portal's API does not offer
+
+The API is served from `admin.opendata.az`; `opendata.az/api/3/action` answers 404. On 2026-11-01 it
+answered `package_search` and `package_show` and refused every other CKAN action tried with HTTP 403
+from nginx: `package_list`, `organization_list`, `group_list`, `tag_list`, `license_list`,
+`status_show`, `resource_show`, `resource_search` and `datastore_search`. So publishers, topics and
+licences come from the facets of `package_search`, and a file's address from `package_show`. The server
+stops on a 403 and says so, and the live contract tests fail if a working action starts returning one.
+
 ## Install
 
 Add to your MCP client configuration (requires [uv](https://docs.astral.sh/uv/)):
@@ -52,7 +61,7 @@ Both settings below are optional and go in the client's `env`:
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `OPENDATA_AZ_API_BASE` | `https://admin.opendata.az/api/3/action` | CKAN API base URL, https only. The portal refuses some other CKAN actions with HTTP 403; this server uses `package_search` and `package_show`. |
+| `OPENDATA_AZ_API_BASE` | `https://admin.opendata.az/api/3/action` | CKAN API base URL, https only. |
 | `OPENDATA_AZ_RESOURCE_HOSTS` | `opendata.az,azstat.gov.az` | Comma-separated hosts whose files may be previewed. Subdomains match; https only. |
 
 ## Data source and terms

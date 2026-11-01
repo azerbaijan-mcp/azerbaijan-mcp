@@ -361,12 +361,23 @@ async def test_file_errors_are_reported_and_not_retried(status, error, message):
     assert len(calls) == 1
 
 
-async def test_a_network_error_while_fetching_a_file():
+@pytest.mark.parametrize(
+    "failure", [httpx.ReadTimeout("slow"), httpx.DecodingError("bad gzip"), httpx.InvalidURL("bad")]
+)
+async def test_a_network_error_while_fetching_a_file(failure):
     def handler(request):
-        raise httpx.ReadTimeout("slow")
+        raise failure
 
-    with pytest.raises(PortalError, match="ReadTimeout"):
+    with pytest.raises(PortalError, match=type(failure).__name__):
         await make_client(handler).fetch_resource("https://opendata.az/a.csv")
+
+
+async def test_an_undecodable_portal_answer_is_a_portal_error():
+    def handler(request):
+        raise httpx.DecodingError("bad gzip")
+
+    with pytest.raises(PortalError, match="did not answer package_show"):
+        await make_client(handler).show("x")
 
 
 async def test_a_client_that_was_handed_in_is_not_closed_by_aclose(portal):
