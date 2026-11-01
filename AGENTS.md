@@ -84,9 +84,9 @@ project:
   name: azerbaijan-mcp; open-source MCP servers for Azerbaijani data; one server per source
   stack: Python 3.11+; uv workspace; FastMCP 4; httpx; pytest; ruff
   layout: packages/<server>/{src,tests}; docs; scripts; .github/workflows
-  commands[5]: uv sync --all-packages,uv run pytest,uv run pytest -m live,uv run ruff check .,uv run ruff format .
+  commands[6]: uv sync --all-packages,uv run pytest,uv run pytest -m live,uv run ruff check .,uv run ruff format .,uv run python scripts/release.py check
   tracker: Linear project azerbaijan-mcp; team mcp; ids MCP-n
-  docs[2]: docs/adding-a-server.md,docs/data-policy.md
+  docs[3]: docs/adding-a-server.md,docs/data-policy.md,docs/releasing.md
   rules: official data first; read-only; no personal data; scrapers local-only; attribute every source
 
 <!-- prettier-ignore-end -->
