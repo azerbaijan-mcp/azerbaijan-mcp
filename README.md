@@ -11,6 +11,9 @@ independently installable server per data source.
 | utils | | Offline helpers: IBAN / VÖEN checks, holidays, AZN in words | planned |
 | eqanun | | e-qanun.az legal acts | planned |
 
+Names: the GitHub organization and repository are `azerbaijan-mcp`, packages are
+`azerbaijan-mcp-<source>` and MCP Registry names are `io.github.azerbaijan-mcp/<source>`.
+
 ## Principles
 
 - **Official data first.** Use official feeds and APIs. Scrape only when there is no alternative.

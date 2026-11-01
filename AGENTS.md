@@ -18,6 +18,7 @@ operations:
   delivery: standing owner authorization (solo) for commit/push/PR/squash merge after verification and self-review; no per-step approval; publish/deploy/delete/spend and destructive git still need an ask
   merge: PR only; reviewed SHA; CI passed (skipped != passed); squash; no main push; no protection bypass
   ci: skipped = waived, not passed; owner alone changes CI policy
+  owner_steps: end every task by listing what only the owner can do, in one place; agents do everything else themselves
 
 git:
   identity: owner account; no global identity changes
@@ -66,7 +67,10 @@ tracking:
   dependencies: real blockedBy/blocks links; acyclic; never start blocked; prose insufficient
   selection: active PR/checkpoint first; then highest ready priority; skip parents and blocked; ties: most unblocking
   start: read issue first; set In Progress before edits
-  completion: Done after merged-main acceptance; partial work and parents stay open
+  completion: Done after merged-main acceptance; a release also needs its live artifacts verified; parents stay open until their children are Done
+  criteria: write acceptance criteria an agent can verify from the repo, CI or public endpoints; owner-only steps (accounts, contacting third parties, manual checks in other apps) go in their own issue
+  status: In Progress only while someone is working it; waiting or paused -> Todo or Backlog with the blocker named
+  close: when a task ends reconcile every issue it touched in the same turn; all criteria met -> Done; an unmet item no agent can finish -> linked follow-up issue naming the owner action, and reword the parent so it closes; never keep a shipped issue open for an optional or external extra
   feature: complete vertical slice; missing part -> linked issue
 
 quality:
@@ -79,6 +83,7 @@ release:
   output: automated from tags or conventional commits; changelog from history
   staging: artifacts by commit SHA
   production: owner approval; promote the same tested artifact
+  after: verify the live artifacts (index, registry, a clean install), tick criteria with evidence, open follow-ups, then close
 
 project:
   name: azerbaijan-mcp; open-source MCP servers for Azerbaijani data; one server per source
