@@ -31,7 +31,7 @@ A server is hosted only when its source is official or open and allows it. A ser
 Copy this checklist into the server's issue and fill it in:
 
 - [ ] Publisher, and why it is the official or best source
-- [ ] Terms or licence URL, the clauses on automated access, date read
+- [ ] Terms or licence URL, the clauses on automated access, date read; look in the FAQ and About pages too, not only a terms page
 - [ ] robots.txt snapshot and date
 - [ ] Data licence and attribution wording (for example CC0, CC-BY)
 - [ ] Rate limit and cache decided
@@ -46,7 +46,7 @@ Every server README has a "Data source and terms" section with the answers.
 | Source | Access | Terms or licence | Decision |
 |---|---|---|---|
 | CBAR exchange rates | Official XML feed | The rates page states no licence or reuse terms and invites importing the XML URL | Go: attribute, cache, honest User-Agent |
-| opendata.az | CKAN API (`package_search`, `package_show`) | The portal states no terms; each dataset has its own licence, mostly CC0 | Go, after asking the operator to confirm reuse terms |
+| opendata.az | CKAN API (`package_search`, `package_show`) | The portal's FAQ (updated 2025-04-08) defines open data as usable and shareable by everyone and invites developers to build on the data and the API; each dataset has its own licence, mostly CC0 | Go: attribute, return each dataset's licence and flag missing ones, fetch files only from allowed hosts |
 | State Statistical Committee (azstat) | Undocumented JSON API | No terms stated; asks users to cite the source | Pending: ask the Committee about terms and stability |
 | e-qanun.az | No official API | Not reviewed | Blocked until the Ministry of Justice answers |
 | Classifieds and job sites | No official API found | Not reviewed; at least one user agreement appears to restrict automated access | Not started: terms review comes first |

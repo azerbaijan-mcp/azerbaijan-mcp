@@ -71,9 +71,11 @@ the portal's CKAN API (`package_search` and `package_show` on `admin.opendata.az
 the files the datasets link to. Answers to the checklist in the repository's
 [data policy](../../docs/data-policy.md), read on 2026-11-01:
 
-- **Terms:** the portal states no terms for automated access. Each dataset carries its own licence,
-  which every response includes. Most are CC0 (1,747 of 2,054 datasets on that day) and a few dozen
-  state none.
+- **Terms:** the portal's FAQ (<https://opendata.az/page/faq>, updated 8 April 2025) defines open data
+  as data anyone can access, use and share again, and tells developers they can build applications on
+  the data and the API. It sets no rules for automated access. Each dataset also carries its own
+  licence, which every response includes. Most are CC0 (1,747 of 2,054 datasets on that day) and a few
+  dozen state none.
 - **robots.txt:** none is published. `opendata.az` redirects the path to a search page,
   `admin.opendata.az` answers 403 and `www.azstat.gov.az` answers 404.
 - **Attribution:** every response has `source` and `attribution` fields naming the portal and the
@@ -84,7 +86,9 @@ the files the datasets link to. Answers to the checklist in the repository's
   for an hour. Files are limited to 5 MB and to the hosts above, and every redirect is checked again.
 - **Personal data:** names and e-mail addresses from the dataset records are never copied. A file
   preview shows what the publisher put in the file, at most 200 rows, and nothing is stored.
-- **Publisher contacted:** not yet. This section will record the reply.
+- **Publisher contacted:** no. The FAQ settles reuse. It does not say whether the API address will stay
+  as it is or why other CKAN actions answer 403; if either causes trouble, ask the operator through
+  the portal's contact link.
 - **Decision:** go, as an official, read-only API.
 
 Unofficial project, not affiliated with or endorsed by IDDA or any publisher on the portal.
