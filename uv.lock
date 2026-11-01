@@ -12,6 +12,7 @@ resolution-markers = [
 [manifest]
 members = [
     "azerbaijan-mcp-cbar",
+    "azerbaijan-mcp-opendata",
     "azerbaijan-mcp-workspace",
 ]
 
@@ -85,6 +86,23 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "defusedxml", specifier = ">=0.7.1" },
+    { name = "fastmcp", specifier = ">=4,<5" },
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "pydantic", specifier = ">=2.7" },
+]
+
+[[package]]
+name = "azerbaijan-mcp-opendata"
+version = "0.1.0"
+source = { editable = "packages/opendata" }
+dependencies = [
+    { name = "fastmcp" },
+    { name = "httpx" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
     { name = "fastmcp", specifier = ">=4,<5" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "pydantic", specifier = ">=2.7" },

@@ -6,7 +6,7 @@ independently installable server per data source.
 | Server | Package | Source | Status |
 |---|---|---|---|
 | [cbar](packages/cbar) | `azerbaijan-mcp-cbar` | Central Bank of Azerbaijan official exchange rates (XML feed) | v0.1 |
-| opendata | | [opendata.az](https://opendata.az) (CKAN API) | planned |
+| [opendata](packages/opendata) | `azerbaijan-mcp-opendata` | [opendata.az](https://opendata.az) open data portal (CKAN API): dataset search and CSV/JSON previews | unreleased |
 | azstat | | State Statistical Committee open API | planned |
 | utils | | Offline helpers: IBAN / VÖEN checks, holidays, AZN in words | planned |
 | eqanun | | e-qanun.az legal acts | planned |

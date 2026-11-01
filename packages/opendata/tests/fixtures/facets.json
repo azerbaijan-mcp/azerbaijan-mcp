@@ -1,0 +1,557 @@
+{
+  "help": "https://admin.opendata.az/api/3/action/help_show?name=package_search",
+  "success": true,
+  "result": {
+    "count": 2054,
+    "facets": {
+      "organization": {
+        "agdas-rayon-icra-hakimiyyeti": 10,
+        "azerbaycan-dovlet-su-ehtiyatlari-agentliyi": 14,
+        "azerbaycan-respublikasi-edliyye-nazirliyi": 8,
+        "azerbaycan-respublikasi-emek-ve-ehalinin-sosial-mudafiesi-nazirliyi": 2,
+        "azerbaycan-respublikasi-hesablama-palatasi": 3,
+        "azerbaycan-respublikasi-kend-teserrufati-nazirliyi": 4,
+        "azerbaycan-respublikasi-mudafie-nazirliyi": 5,
+        "azerbaycan-respublikasi-seferberlik-ve-herbi-xidmete-cagiris-uzre-dovlet-xidmeti": 2,
+        "azerbaycan-respublikasinin-dovlet-imtahan-merkezi": 40,
+        "azerbaycan-respublikasinin-dovlet-reklam-agentliyi": 15,
+        "azerbaycan-respublikasinin-ekologiya-ve-tebii-servetler-nazirliyi": 11,
+        "azerbaycan-respublikasinin-elm-ve-tehsil-nazirliyi": 50,
+        "azerbaycan-respublikasinin-maliyye-monitorinqi-xidmeti": 1,
+        "azerbaycan-respublikasinin-maliyye-nazirliyi": 2,
+        "azerbaycan-respublikasinin-minatemizleme-agentliyi-anama": 2,
+        "azerbaycan-respublikasinin-sehiyye-nazirliyi": 7,
+        "azerbaycan-yerustu-neqliyyat-agentliyi": 4,
+        "azerenerji-asc": 4,
+        "azergold-qsc": 5,
+        "azeriqaz-ib": 5,
+        "azerisiq-asc": 12,
+        "baki-metropoliteni": 6,
+        "cebrayil-rayon-icra-hakimiyyeti": 6,
+        "daskesen-rayon-icra-hakimiyyeti": 6,
+        "denizkenari-bulvar-idaresi": 4,
+        "diasporla-is-uzre-dovlet-komitesi": 7,
+        "dovlet-gomruk-komitesi": 4,
+        "dovlet-miqrasiya-xidmeti": 4,
+        "dsk": 1662,
+        "energetika-nazirliyi": 17,
+        "fovqelade-hallar-nazirliyi": 20,
+        "gedebey-rayon-icra-hakimiyyeti": 5,
+        "gencler-ve-idman-nazirliyi": 6,
+        "goycay-rayon-icra-hakimiyyeti": 2,
+        "https-family-gov-az-az": 3,
+        "icbari-tibbi-sigorta-uzre-dovlet-agentliyi": 2,
+        "informasiya-kommunikasiya-texnologiyalari-agentliyi": 1,
+        "iqtisadi-islahatlarin-tehlili-ve-kommunikasiya-merkezi": 1,
+        "lerik-rayon-icra-hakimiyyeti": 1,
+        "medianin-inkisafi-agentliyi": 9,
+        "merkezi-bank": 1,
+        "mudafie-sanayesi-nazirliyi": 2,
+        "qacqinlarin-ve-mecburi-kockunlerin-isleri-uzre-dovlet-komitesi": 2,
+        "qarabag-dircelis-fondu": 4,
+        "qebele-rayon-icra-hakimiyyeti": 12,
+        "qeyri-hokumet-teskilatlarina-dovlet-desteyi-agentliyi": 6,
+        "socar": 20,
+        "tibbi-erazi-bolmelerini-idareetme-birliyi": 9,
+        "ucar-rayon-icra-hakimiyyeti": 1,
+        "vetendaslara-xidmet-ve-sosial-innovasiyalar-uzre-dovlet-agentliyi": 15,
+        "yardimli-rayon-icra-hakimiyyeti": 8,
+        "yasamal-rayon-icra-hakimiyyeti": 1,
+        "yevlax-rayon-icra-hakimiyyeti": 1
+      },
+      "groups": {
+        "cartography": 8,
+        "culture": 12,
+        "ecology": 32,
+        "economics": 246,
+        "education": 64,
+        "health": 36,
+        "hidrometeorologiya": 3,
+        "security": 3,
+        "sport": 1,
+        "tourism": 15,
+        "trade": 15,
+        "transport": 49
+      },
+      "license_id": {
+        "cc-by": 195,
+        "cc-nc": 2,
+        "cc-zero": 1747,
+        "gfdl": 2,
+        "notspecified": 56,
+        "odc-by": 28,
+        "odc-odbl": 2,
+        "odc-pddl": 1,
+        "other-open": 20,
+        "other-pd": 1
+      },
+      "res_format": {
+        "": 6,
+        ".xlsx": 1,
+        "CSV": 1988,
+        "GeoJSON": 15,
+        "JSON": 1491,
+        "KMZ": 3,
+        "TXT": 1,
+        "XLS": 32,
+        "XLSX": 34,
+        "XML": 54,
+        "ZIP": 1
+      }
+    },
+    "results": [],
+    "sort": "score desc, metadata_modified desc",
+    "search_facets": {
+      "organization": {
+        "title": "organization",
+        "items": [
+          {
+            "name": "baki-metropoliteni",
+            "display_name": "“Bakı Metropoliteni” QSC",
+            "count": 6
+          },
+          {
+            "name": "azerisiq-asc",
+            "display_name": "“Azərişıq” ASC",
+            "count": 12
+          },
+          {
+            "name": "azeriqaz-ib",
+            "display_name": "“Azəriqaz” İB",
+            "count": 5
+          },
+          {
+            "name": "azergold-qsc",
+            "display_name": "“AzerGold” QSC",
+            "count": 5
+          },
+          {
+            "name": "iqtisadi-islahatlarin-tehlili-ve-kommunikasiya-merkezi",
+            "display_name": "İqtisadi İslahatların Təhlili və Kommunikasiya Mərkəzi",
+            "count": 1
+          },
+          {
+            "name": "informasiya-kommunikasiya-texnologiyalari-agentliyi",
+            "display_name": "İnformasiya Kommunikasiya Texnologiyaları Agentliyi ",
+            "count": 1
+          },
+          {
+            "name": "icbari-tibbi-sigorta-uzre-dovlet-agentliyi",
+            "display_name": "İcbari Tibbi Sığorta üzrə Dövlət Agentliyi",
+            "count": 2
+          },
+          {
+            "name": "yevlax-rayon-icra-hakimiyyeti",
+            "display_name": "Yevlax Rayon İcra Hakimiyyəti",
+            "count": 1
+          },
+          {
+            "name": "yasamal-rayon-icra-hakimiyyeti",
+            "display_name": "Yasamal Rayon İcra Hakimiyyəti ",
+            "count": 1
+          },
+          {
+            "name": "yardimli-rayon-icra-hakimiyyeti",
+            "display_name": "Yardımlı Rayon İcra Hakimiyyəti ",
+            "count": 8
+          },
+          {
+            "name": "ucar-rayon-icra-hakimiyyeti",
+            "display_name": "Ucar Rayon İcra Hakimiyyəti",
+            "count": 1
+          },
+          {
+            "name": "tibbi-erazi-bolmelerini-idareetme-birliyi",
+            "display_name": "Tibbi Ərazi Bölmələrini İdarəetmə Birliyi",
+            "count": 9
+          },
+          {
+            "name": "qebele-rayon-icra-hakimiyyeti",
+            "display_name": "Qəbələ Rayon İcra Hakimiyyəti",
+            "count": 12
+          },
+          {
+            "name": "qeyri-hokumet-teskilatlarina-dovlet-desteyi-agentliyi",
+            "display_name": "Qeyri-Hökumət Təşkilatlarına Dövlət Dəstəyi Agentliyi",
+            "count": 6
+          },
+          {
+            "name": "qarabag-dircelis-fondu",
+            "display_name": "Qarabağ Dirçəliş Fondu",
+            "count": 4
+          },
+          {
+            "name": "lerik-rayon-icra-hakimiyyeti",
+            "display_name": "Lerik Rayon İcra Hakimiyyəti ",
+            "count": 1
+          },
+          {
+            "name": "gedebey-rayon-icra-hakimiyyeti",
+            "display_name": "Gədəbəy Rayon İcra Hakimiyyəti",
+            "count": 5
+          },
+          {
+            "name": "goycay-rayon-icra-hakimiyyeti",
+            "display_name": "Göyçay Rayon İcra Hakimiyyəti ",
+            "count": 2
+          },
+          {
+            "name": "denizkenari-bulvar-idaresi",
+            "display_name": "Dənizkənarı Bulvar İdarəsi",
+            "count": 4
+          },
+          {
+            "name": "socar",
+            "display_name": "Dövlət Neft Şirkəti (SOCAR)",
+            "count": 20
+          },
+          {
+            "name": "dovlet-miqrasiya-xidmeti",
+            "display_name": "Dövlət Miqrasiya Xidməti",
+            "count": 4
+          },
+          {
+            "name": "diasporla-is-uzre-dovlet-komitesi",
+            "display_name": "Diasporla İş üzrə Dövlət Komitəsi",
+            "count": 7
+          },
+          {
+            "name": "daskesen-rayon-icra-hakimiyyeti",
+            "display_name": "Daşkəsən Rayon İcra Hakimiyyəti",
+            "count": 6
+          },
+          {
+            "name": "cebrayil-rayon-icra-hakimiyyeti",
+            "display_name": "Cəbrayıl Rayon İcra Hakimiyyəti",
+            "count": 6
+          },
+          {
+            "name": "agdas-rayon-icra-hakimiyyeti",
+            "display_name": "Ağdaş Rayon İcra Hakimiyyəti",
+            "count": 10
+          },
+          {
+            "name": "azerbaycan-yerustu-neqliyyat-agentliyi",
+            "display_name": "Azərbaycan Yerüstü Nəqliyyat Agentliyi ",
+            "count": 4
+          },
+          {
+            "name": "azerbaycan-respublikasi-edliyye-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Ədliyyə Nazirliyi",
+            "count": 8
+          },
+          {
+            "name": "azerbaycan-respublikasinin-sehiyye-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Səhiyyə Nazirliyi",
+            "count": 7
+          },
+          {
+            "name": "vetendaslara-xidmet-ve-sosial-innovasiyalar-uzre-dovlet-agentliyi",
+            "display_name": "Azərbaycan Respublikasının Prezidenti yanında Vətəndaşlara Xidmət və Sosial İnnovasiyalar üzrə Dövlət Agentliyi",
+            "count": 15
+          },
+          {
+            "name": "merkezi-bank",
+            "display_name": "Azərbaycan Respublikasının Mərkəzi Bankı",
+            "count": 1
+          },
+          {
+            "name": "mudafie-sanayesi-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Müdafiə Sənayesi Nazirliyi",
+            "count": 2
+          },
+          {
+            "name": "azerbaycan-respublikasinin-minatemizleme-agentliyi-anama",
+            "display_name": "Azərbaycan Respublikasının Minatəmizləmə Agentliyi (ANAMA)",
+            "count": 2
+          },
+          {
+            "name": "medianin-inkisafi-agentliyi",
+            "display_name": "Azərbaycan Respublikasının Medianın İnkişafı Agentliyi",
+            "count": 9
+          },
+          {
+            "name": "azerbaycan-respublikasinin-maliyye-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Maliyyə Nazirliyi",
+            "count": 2
+          },
+          {
+            "name": "azerbaycan-respublikasinin-maliyye-monitorinqi-xidmeti",
+            "display_name": "Azərbaycan Respublikasının Maliyyə Monitorinqi Xidməti",
+            "count": 1
+          },
+          {
+            "name": "gencler-ve-idman-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Gənclər və İdman Nazirliyi",
+            "count": 6
+          },
+          {
+            "name": "fovqelade-hallar-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Fövqəladə Hallar Nazirliyi",
+            "count": 20
+          },
+          {
+            "name": "azerbaycan-respublikasinin-elm-ve-tehsil-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Elm və Təhsil Nazirliyi",
+            "count": 50
+          },
+          {
+            "name": "azerbaycan-respublikasinin-ekologiya-ve-tebii-servetler-nazirliyi",
+            "display_name": "Azərbaycan Respublikasının Ekologiya və Təbii Sərvətlər Nazirliyi",
+            "count": 11
+          },
+          {
+            "name": "azerbaycan-respublikasinin-dovlet-imtahan-merkezi",
+            "display_name": "Azərbaycan Respublikasının Dövlət İmtahan Mərkəzi",
+            "count": 40
+          },
+          {
+            "name": "dsk",
+            "display_name": "Azərbaycan Respublikasının Dövlət Statistika Komitəsi",
+            "count": 1662
+          },
+          {
+            "name": "azerbaycan-respublikasinin-dovlet-reklam-agentliyi",
+            "display_name": "Azərbaycan Respublikasının Dövlət Reklam Agentliyi",
+            "count": 15
+          },
+          {
+            "name": "azerbaycan-respublikasi-emek-ve-ehalinin-sosial-mudafiesi-nazirliyi",
+            "display_name": "Azərbaycan Respublikası Əmək və Əhalinin Sosial Müdafiəsi Nazirliyi",
+            "count": 2
+          },
+          {
+            "name": "azerbaycan-respublikasi-seferberlik-ve-herbi-xidmete-cagiris-uzre-dovlet-xidmeti",
+            "display_name": "Azərbaycan Respublikası Səfərbərlik və Hərbi Xidmətə Çağırış üzrə Dövlət Xidməti",
+            "count": 2
+          },
+          {
+            "name": "qacqinlarin-ve-mecburi-kockunlerin-isleri-uzre-dovlet-komitesi",
+            "display_name": "Azərbaycan Respublikası Qaçqınların və Məcburi Köçkünlərin İşləri üzrə Dövlət Komitəsi",
+            "count": 2
+          },
+          {
+            "name": "azerbaycan-respublikasi-mudafie-nazirliyi",
+            "display_name": "Azərbaycan Respublikası Müdafiə Nazirliyi",
+            "count": 5
+          },
+          {
+            "name": "azerbaycan-respublikasi-kend-teserrufati-nazirliyi",
+            "display_name": "Azərbaycan Respublikası Kənd Təsərrüfatı Nazirliyi",
+            "count": 4
+          },
+          {
+            "name": "azerbaycan-respublikasi-hesablama-palatasi",
+            "display_name": "Azərbaycan Respublikası Hesablama Palatası",
+            "count": 3
+          },
+          {
+            "name": "dovlet-gomruk-komitesi",
+            "display_name": "Azərbaycan Respublikası Dövlət Gömrük Komitəsi",
+            "count": 4
+          },
+          {
+            "name": "azerbaycan-dovlet-su-ehtiyatlari-agentliyi",
+            "display_name": "Azərbaycan Dövlət Su Ehtiyatları Agentliyi",
+            "count": 14
+          },
+          {
+            "name": "azerenerji-asc",
+            "display_name": "AzərEnerji ASC",
+            "count": 4
+          },
+          {
+            "name": "https-family-gov-az-az",
+            "display_name": "Ailə, Qadın və Uşaq Problemləri üzrə Dövlət Komitəsi",
+            "count": 3
+          },
+          {
+            "name": "energetika-nazirliyi",
+            "display_name": " Azərbaycan Respublikasının Energetika Nazirliyi",
+            "count": 17
+          }
+        ]
+      },
+      "groups": {
+        "title": "groups",
+        "items": [
+          {
+            "name": "ecology",
+            "display_name": "Ətraf mühit",
+            "count": 32
+          },
+          {
+            "name": "economics",
+            "display_name": "İqtisadiyyat",
+            "count": 246
+          },
+          {
+            "name": "sport",
+            "display_name": "İdman",
+            "count": 1
+          },
+          {
+            "name": "education",
+            "display_name": "Təhsil",
+            "count": 64
+          },
+          {
+            "name": "security",
+            "display_name": "Təhlükəsizlik",
+            "count": 3
+          },
+          {
+            "name": "tourism",
+            "display_name": "Turizm",
+            "count": 15
+          },
+          {
+            "name": "trade",
+            "display_name": "Ticarət",
+            "count": 15
+          },
+          {
+            "name": "health",
+            "display_name": "Səhiyyə",
+            "count": 36
+          },
+          {
+            "name": "transport",
+            "display_name": "Nəqliyyat",
+            "count": 49
+          },
+          {
+            "name": "culture",
+            "display_name": "Mədəniyyət",
+            "count": 12
+          },
+          {
+            "name": "hidrometeorologiya",
+            "display_name": "Hidrometeorologiya",
+            "count": 3
+          },
+          {
+            "name": "cartography",
+            "display_name": "Coğrafi məlumatlar",
+            "count": 8
+          }
+        ]
+      },
+      "license_id": {
+        "title": "license_id",
+        "items": [
+          {
+            "name": "other-pd",
+            "display_name": "Other (Public Domain)",
+            "count": 1
+          },
+          {
+            "name": "other-open",
+            "display_name": "Other (Open)",
+            "count": 20
+          },
+          {
+            "name": "odc-pddl",
+            "display_name": "Open Data Commons Public Domain Dedication and License (PDDL)",
+            "count": 1
+          },
+          {
+            "name": "odc-odbl",
+            "display_name": "Open Data Commons Open Database License (ODbL)",
+            "count": 2
+          },
+          {
+            "name": "odc-by",
+            "display_name": "Open Data Commons Attribution License",
+            "count": 28
+          },
+          {
+            "name": "notspecified",
+            "display_name": "License not specified",
+            "count": 56
+          },
+          {
+            "name": "gfdl",
+            "display_name": "GNU Free Documentation License",
+            "count": 2
+          },
+          {
+            "name": "cc-nc",
+            "display_name": "Creative Commons Non-Commercial (Any)",
+            "count": 2
+          },
+          {
+            "name": "cc-zero",
+            "display_name": "Creative Commons CCZero",
+            "count": 1747
+          },
+          {
+            "name": "cc-by",
+            "display_name": "Creative Commons Attribution",
+            "count": 195
+          }
+        ]
+      },
+      "res_format": {
+        "title": "res_format",
+        "items": [
+          {
+            "name": "ZIP",
+            "display_name": "ZIP",
+            "count": 1
+          },
+          {
+            "name": "XML",
+            "display_name": "XML",
+            "count": 54
+          },
+          {
+            "name": "XLSX",
+            "display_name": "XLSX",
+            "count": 34
+          },
+          {
+            "name": "XLS",
+            "display_name": "XLS",
+            "count": 32
+          },
+          {
+            "name": "TXT",
+            "display_name": "TXT",
+            "count": 1
+          },
+          {
+            "name": "KMZ",
+            "display_name": "KMZ",
+            "count": 3
+          },
+          {
+            "name": "JSON",
+            "display_name": "JSON",
+            "count": 1491
+          },
+          {
+            "name": "GeoJSON",
+            "display_name": "GeoJSON",
+            "count": 15
+          },
+          {
+            "name": "CSV",
+            "display_name": "CSV",
+            "count": 1988
+          },
+          {
+            "name": ".xlsx",
+            "display_name": ".xlsx",
+            "count": 1
+          },
+          {
+            "name": "",
+            "display_name": "",
+            "count": 6
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+﻿Example table title;;;;
+;;;;
+No;"Settlement
+name";Area;Population;Note
+1;Alpha;12.5;1200;
+2;Beta;8;640;"has a; semicolon"
+3;Gamma;20.1;2100;
