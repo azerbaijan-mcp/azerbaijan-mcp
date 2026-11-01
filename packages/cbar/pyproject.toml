@@ -1,0 +1,35 @@
+[project]
+name = "azerbaijan-mcp-cbar"
+version = "0.1.0"
+description = "MCP server for the official exchange rates of the Central Bank of the Republic of Azerbaijan (CBAR)."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Shamkhal Maharramov" }]
+keywords = ["mcp", "model-context-protocol", "azerbaijan", "cbar", "exchange-rates"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+  "defusedxml>=0.7.1",
+  "fastmcp>=4,<5",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+]
+
+[project.scripts]
+azerbaijan-mcp-cbar = "azerbaijan_mcp_cbar.server:main"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/azerbaijan_mcp_cbar"]
