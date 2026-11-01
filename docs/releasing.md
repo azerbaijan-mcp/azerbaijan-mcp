@@ -24,7 +24,7 @@ Each package is released on its own, by pushing a tag named `<package>-v<version
 
 1. On a throwaway branch set the version to a pre-release, for example `0.1.0rc1` in `packages/cbar/pyproject.toml`, then run `uv lock` and `python scripts/release.py stamp cbar`. Without `uv lock`, `uv sync --locked` fails because the lockfile records each package's version.
 2. Commit, tag that commit `cbar-v0.1.0rc1` and push only the tag: `git tag cbar-v0.1.0rc1 && git push origin cbar-v0.1.0rc1`.
-3. Watch the Release workflow, then install the result (untested until the first dry run; adjust the flags if uv has changed): `uvx --index-strategy unsafe-best-match --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ azerbaijan-mcp-cbar==0.1.0rc1`.
+3. Watch the Release workflow, then check the result without letting TestPyPI supply dependencies (anyone can upload lookalike packages there). Download the wheel from the TestPyPI project page, or take its URL from `https://test.pypi.org/pypi/azerbaijan-mcp-cbar/0.1.0rc1/json`, and run it: `uv run --no-project --with ./azerbaijan_mcp_cbar-0.1.0rc1-py3-none-any.whl azerbaijan-mcp-cbar`. Dependencies come from PyPI. This was tried in the first dry run.
 4. Delete the branch and the tag. TestPyPI never accepts a version twice, so the next dry run needs `rc2`.
 
 ## Release
