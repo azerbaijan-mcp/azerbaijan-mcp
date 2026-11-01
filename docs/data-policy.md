@@ -47,7 +47,7 @@ Every server README has a "Data source and terms" section with the answers.
 |---|---|---|---|
 | CBAR exchange rates | Official XML feed | The rates page states no licence or reuse terms and invites importing the XML URL | Go: attribute, cache, honest User-Agent |
 | opendata.az | CKAN API (`package_search`, `package_show`) | The portal's FAQ (updated 2025-04-08) defines open data as usable and shareable by everyone and invites developers to build on the data and the API; each dataset has its own licence, mostly CC0 | Go: attribute, return each dataset's licence and flag missing ones, fetch files only from allowed hosts |
-| State Statistical Committee (azstat) | Undocumented JSON API | No terms stated; asks users to cite the source | Pending: ask the Committee about terms and stability |
+| State Statistical Committee (azstat) | Undocumented JSON API (`tables`, `data`) | No terms of its own; asks users to cite the source. opendata.az lists this API among the files of most of the Committee's datasets, all CC0, and its FAQ invites reuse | Go: cite the Committee, cache, honest User-Agent, contract test, report tables the API leaves ambiguous |
 | e-qanun.az | No official API | Not reviewed | Blocked until the Ministry of Justice answers |
 | Classifieds and job sites | No official API found | Not reviewed; at least one user agreement appears to restrict automated access | Not started: terms review comes first |
 
