@@ -7,6 +7,7 @@ from typing import Any
 
 MAX_CELL = 200
 DELIMITERS = ",;\t|"
+TOO_DEEP = "The JSON is nested too deeply to preview."
 
 
 class PreviewError(Exception):
@@ -81,8 +82,17 @@ def preview_json(raw: bytes, rows: int) -> dict[str, Any]:
     text, encoding = decode(raw)
     try:
         data = json.loads(text)
+    except RecursionError as exc:
+        raise PreviewError(TOO_DEEP) from exc
     except ValueError as exc:
         raise PreviewError(f"The file is not valid JSON: {exc}") from exc
+    try:
+        return _tabulate(data, encoding, rows)
+    except RecursionError as exc:
+        raise PreviewError(TOO_DEEP) from exc
+
+
+def _tabulate(data: Any, encoding: str, rows: int) -> dict[str, Any]:
     table_key: str | None = None
     meta: dict[str, Any] = {}
     if isinstance(data, dict):

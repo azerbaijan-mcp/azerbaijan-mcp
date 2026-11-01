@@ -53,7 +53,9 @@ def _license(raw: dict[str, Any]) -> License:
     )
 
 
-def summarize(raw: dict[str, Any], lang: str, description_chars: int = SUMMARY_CHARS) -> DatasetSummary:
+def summarize(
+    raw: dict[str, Any], lang: str, description_chars: int = SUMMARY_CHARS
+) -> DatasetSummary:
     organization = raw.get("organization")
     resources = raw.get("resources") or []
     return DatasetSummary(
@@ -62,12 +64,17 @@ def summarize(raw: dict[str, Any], lang: str, description_chars: int = SUMMARY_C
         title=_text(raw, "title", lang),
         description=_clip(_text(raw, "notes", lang), description_chars),
         organization=(
-            Organization(name=organization["name"], title=organization.get("title") or organization["name"])
+            Organization(
+                name=organization["name"], title=organization.get("title") or organization["name"]
+            )
             if organization
             else None
         ),
         groups=[
-            Group(name=group["name"], title=group.get("display_name") or group.get("title") or group["name"])
+            Group(
+                name=group["name"],
+                title=group.get("display_name") or group.get("title") or group["name"],
+            )
             for group in raw.get("groups") or []
         ],
         license=_license(raw),
@@ -78,12 +85,15 @@ def summarize(raw: dict[str, Any], lang: str, description_chars: int = SUMMARY_C
     )
 
 
-def _resource(resource: dict[str, Any], lang: str, host_allowed: Callable[[str], bool]) -> ResourceInfo:
+def _resource(
+    resource: dict[str, Any], lang: str, host_allowed: Callable[[str], bool]
+) -> ResourceInfo:
     fmt = _format(resource)
     url = resource.get("url") or ""
     note = None
     if fmt not in PREVIEW_FORMATS:
-        note = f"{fmt or 'This kind of'} files are not previewed; use the link."
+        kind = f"{fmt} files are" if fmt else "Files of unknown type are"
+        note = f"{kind} not previewed; use the link."
     elif not host_allowed(url):
         note = "The file is hosted outside the allowed hosts; use the link."
     size = resource.get("size")

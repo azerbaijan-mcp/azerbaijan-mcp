@@ -84,19 +84,28 @@ class ResourcePreview(BaseModel):
     resource_name: str
     format: str
     url: str = Field(description="The file's own address; open it when the preview is not enough.")
-    reason: str | None = Field(default=None, description="Why there is no preview, if there is none.")
+    reason: str | None = Field(
+        default=None, description="Why there is no preview, if there is none."
+    )
     size_bytes: int | None = None
     encoding: str | None = None
     delimiter: str | None = Field(default=None, description="CSV only.")
     rows: list[list[str]] | None = Field(
-        default=None, description="CSV only: the first non-empty rows. The first row is often not a header."
+        default=None,
+        description="CSV only: the first non-empty rows. The first row is often not a header.",
     )
-    total_rows: int | None = Field(default=None, description="CSV only: non-empty rows in the file.")
+    total_rows: int | None = Field(
+        default=None, description="CSV only: non-empty rows in the file."
+    )
     blank_rows_skipped: int | None = Field(default=None, description="CSV only.")
     records: list[dict[str, Any]] | None = Field(default=None, description="JSON only.")
     total_records: int | None = Field(default=None, description="JSON only.")
-    table_key: str | None = Field(default=None, description="JSON only: where the records were found.")
-    meta: dict[str, Any] | None = Field(default=None, description="JSON only: the other top-level fields.")
+    table_key: str | None = Field(
+        default=None, description="JSON only: where the records were found."
+    )
+    meta: dict[str, Any] | None = Field(
+        default=None, description="JSON only: the other top-level fields."
+    )
     truncated: bool | None = Field(default=None, description="True when the file has more rows.")
     license: License
     source: str

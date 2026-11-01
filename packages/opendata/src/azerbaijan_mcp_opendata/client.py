@@ -20,6 +20,7 @@ FACETS_TTL = 3600.0
 CACHE_SIZE = 256
 RETRY_DELAY = 0.5
 REDIRECT_CODES = {301, 302, 303, 307, 308}
+BLOCKED_CODES = {403, 429}
 FACET_FIELDS = '["organization","groups","license_id","res_format"]'
 
 
@@ -32,7 +33,7 @@ class NotFound(PortalError):
 
 
 class EndpointBlocked(PortalError):
-    """The portal refuses an endpoint this server relies on (HTTP 403)."""
+    """The portal refuses an endpoint this server relies on, or asks it to slow down (403, 429)."""
 
 
 class ResourceRefused(PortalError):
@@ -76,7 +77,7 @@ class OpenDataClient:
 
     @classmethod
     def from_env(cls) -> "OpenDataClient":
-        """OPENDATA_AZ_API_BASE and OPENDATA_AZ_RESOURCE_HOSTS (comma separated) override the defaults."""
+        """Read OPENDATA_AZ_API_BASE and OPENDATA_AZ_RESOURCE_HOSTS (comma separated), if set."""
         hosts = os.environ.get("OPENDATA_AZ_RESOURCE_HOSTS")
         return cls(
             api_base=os.environ.get("OPENDATA_AZ_API_BASE", DEFAULT_API_BASE),
@@ -100,7 +101,9 @@ class OpenDataClient:
     async def _throttle(self, host: str) -> None:
         lock = self._locks.setdefault(host, asyncio.Lock())
         async with lock:
-            wait = self._last_request.get(host, -self._min_interval) + self._min_interval - self._now()
+            wait = (
+                self._last_request.get(host, -self._min_interval) + self._min_interval - self._now()
+            )
             if wait > 0:
                 await self._sleep(wait)
             self._last_request[host] = self._now()
@@ -116,11 +119,17 @@ class OpenDataClient:
         return value
 
     def host_allowed(self, url: str) -> bool:
-        """True for https URLs on an allowed host or one of its subdomains."""
-        parts = urlsplit(url)
+        """True for https URLs on an allowed host or one of its subdomains, default port only."""
+        try:
+            parts = urlsplit(url)
+            port = parts.port
+        except ValueError:
+            return False
         host = (parts.hostname or "").lower()
-        return parts.scheme == "https" and any(
-            host == allowed or host.endswith("." + allowed) for allowed in self._hosts
+        return (
+            parts.scheme == "https"
+            and port in (None, 443)
+            and any(host == allowed or host.endswith("." + allowed) for allowed in self._hosts)
         )
 
     async def _api(self, action: str, params: dict[str, str]) -> dict[str, Any]:
@@ -135,8 +144,11 @@ class OpenDataClient:
             else:
                 if response.status_code == 404:
                     raise NotFound("The portal has no such dataset.")
-                if response.status_code == 403:
-                    raise EndpointBlocked(f"The portal refuses {action} (HTTP 403).")
+                if response.status_code in BLOCKED_CODES:
+                    raise EndpointBlocked(
+                        f"The portal refuses {action} (HTTP {response.status_code}). "
+                        "This server does not retry or work around it."
+                    )
                 if response.status_code < 500:
                     return self._unwrap(action, response)
                 error = PortalError(f"HTTP {response.status_code}")
@@ -195,9 +207,7 @@ class OpenDataClient:
         current = url
         for _ in range(MAX_REDIRECTS + 1):
             if not self.host_allowed(current):
-                if current == url:
-                    raise ResourceRefused("link_only", "The file is hosted outside the allowed hosts.")
-                raise ResourceRefused("link_only", "The file redirects to a host outside the allowed hosts.")
+                raise self._not_allowed(redirected=current != url)
             await self._throttle(urlsplit(current).hostname or "")
             try:
                 async with self._client().stream("GET", current) as response:
@@ -229,8 +239,14 @@ class OpenDataClient:
             chunks.append(chunk)
         return b"".join(chunks), response.headers.get("content-type", "")
 
+    def _not_allowed(self, *, redirected: bool) -> ResourceRefused:
+        where = "redirects away from" if redirected else "is not on"
+        hosts = ", ".join(self._hosts)
+        return ResourceRefused("link_only", f"The file {where} an allowed https host ({hosts}).")
+
     def _too_large(self, size: int | None = None) -> str:
-        limit = f"{self._max_bytes // (1024 * 1024)} MB"
+        megabytes = self._max_bytes / (1024 * 1024)
+        limit = f"{megabytes:g} MB" if megabytes >= 1 else f"{self._max_bytes:,} bytes"
         if size is None:
             return f"The file is larger than the {limit} preview limit."
         return f"The file is {size:,} bytes; the preview limit is {limit}."
