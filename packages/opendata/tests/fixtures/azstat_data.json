@@ -1,0 +1,111 @@
+{
+  "success": true,
+  "message": "Statistik məlumatlar uğurla qaytarıldı.",
+  "table": {
+    "table_id": "DT_BK_017",
+    "table_name": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)"
+  },
+  "filters": {
+    "table_id": "DT_BK_017",
+    "lang": "en"
+  },
+  "count": 6,
+  "data": [
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "001",
+      "level_1_name": "Total",
+      "hierarchy_1_level_1": "Total",
+      "hierarchy_1_depth": 1,
+      "item": "Total",
+      "value": 2078.7,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    },
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "003",
+      "level_1_name": "Agriculture, forestry and  fishing",
+      "hierarchy_1_level_1": "Agriculture, forestry and  fishing",
+      "hierarchy_1_depth": 1,
+      "item": "Agriculture, forestry and  fishing",
+      "value": 39,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    },
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "004",
+      "level_1_name": "Industry",
+      "hierarchy_1_level_1": "Industry",
+      "hierarchy_1_depth": 1,
+      "item": "Industry",
+      "value": 1171.2,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    },
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "006",
+      "level_1_name": "mining",
+      "hierarchy_1_level_1": "mining",
+      "hierarchy_1_depth": 1,
+      "item": "mining",
+      "value": 559,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    },
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "007",
+      "level_1_name": "manufacturing",
+      "hierarchy_1_level_1": "manufacturing",
+      "hierarchy_1_depth": 1,
+      "item": "manufacturing",
+      "value": 402.8,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    },
+    {
+      "table_id": "DT_BK_017",
+      "period_type": "Y",
+      "period": "2017",
+      "dataset_title": "Losses of businesses by economic activity types starting from 2017, mln.manats (NACE, 3rd version)",
+      "dimension_1": "Indicator",
+      "level_1_id": "008",
+      "level_1_name": "electricity, gas and steam  production, distribution and supply",
+      "hierarchy_1_level_1": "electricity, gas and steam  production, distribution and supply",
+      "hierarchy_1_depth": 1,
+      "item": "electricity, gas and steam  production, distribution and supply",
+      "value": 73.6,
+      "symbol": null,
+      "comment": "N",
+      "publication_status": "1210110"
+    }
+  ]
+}

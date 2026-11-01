@@ -1,0 +1,171 @@
+{
+  "help": "https://admin.opendata.az/api/3/action/help_show?name=package_show",
+  "success": true,
+  "result": {
+    "author": "Azərbaycan Respublikasının Dövlət Statistika Komitəsi",
+    "author_email": "",
+    "author_translated": {
+      "az": "Azərbaycan Respublikasının Dövlət Statistika Komitəsi",
+      "en": "State Statistical Committee of the Republic of Azerbaijan",
+      "ru": "Государственный статистический комитет Азербайджанской Республики"
+    },
+    "creator_user_id": "a07b9c1a-4f20-475b-9ea4-2d3115024db7",
+    "id": "48b43a92-0821-40b6-884d-c41606907a8b",
+    "isopen": true,
+    "license_id": "cc-zero",
+    "license_title": "Creative Commons CCZero",
+    "license_url": "http://www.opendefinition.org/licenses/cc-zero",
+    "maintainer": "",
+    "maintainer_email": "",
+    "maintainer_translated": {},
+    "metadata_created": "2024-12-11T11:03:43.412411",
+    "metadata_modified": "2026-10-27T10:54:20.993662",
+    "name": "income-and-expenditure-of-the-population--in-current-prices--mln--",
+    "notes": "",
+    "notes_translated": {
+      "az": "Bu məlumat dəsti 2003–2025-ci illər üzrə Azərbaycan Respublikasında əhalinin gəlirləri və xərclərinə dair statistik məlumatları əhatə edir. Məlumat dəstində əhalinin gəlirləri və xərclərinin cari qiymətlərlə həcmi illər üzrə təqdim olunur və göstəricilərin zaman üzrə dəyişmə dinamikası əks etdirilir.\n\nGöstəricilər milyon manatla ifadə olunur. Təqdim olunan məlumatlar əhalinin gəlir və xərclərinin səviyyəsini, onların illər üzrə dəyişməsini və gəlir-xərc göstəriciləri arasındakı fərqi xarakterizə edir. Bu göstəricilər əhalinin maliyyə vəziyyətinin qiymətləndirilməsi, gəlir və xərclərin müqayisəsi və əhalinin iqtisadi vəziyyətinin qiymətləndirilməsi məqsədilə istifadə olunur.",
+      "en": "This dataset covers statistical data on the income and expenditure of the population of the Republic of Azerbaijan for 2003–2025. The dataset presents annual income and expenditure at current prices and reflects changes in these indicators over time.\n\nThe indicators are expressed in million manats. The data describe the levels of the population’s income and expenditure, their changes over the years, and the difference between income and expenditure. These indicators are used to assess the population’s financial situation, compare income and expenditure, and evaluate the population’s economic situation."
+    },
+    "num_resources": 3,
+    "num_tags": 1,
+    "organization": {
+      "id": "9b44b52f-2116-48c8-9565-d9dc026dca8f",
+      "name": "dsk",
+      "title": "Azərbaycan Respublikasının Dövlət Statistika Komitəsi",
+      "type": "organization",
+      "description": "https://www.stat.gov.az/",
+      "image_url": "2024-12-04-124349.107003AzStatlogo.png",
+      "created": "2024-11-29T10:23:01.781228",
+      "is_organization": true,
+      "approval_status": "approved",
+      "state": "active"
+    },
+    "owner_org": "9b44b52f-2116-48c8-9565-d9dc026dca8f",
+    "private": false,
+    "state": "active",
+    "title": "Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)",
+    "title_translated": {
+      "az": "Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)",
+      "en": "Income and expenditure of population (current prices, million manat)"
+    },
+    "type": "dataset",
+    "url": "https://azstat.gov.az/statHtml/statHtml.do?orgId=994&tblId=DT_BA_005",
+    "version": "2.0.0",
+    "groups": [
+      {
+        "description": "",
+        "display_name": "İqtisadiyyat",
+        "id": "7bfdfc9f-65e7-474c-afb6-12ad11a65042",
+        "image_display_url": "https://admin.opendata.az/uploads/group/2024-12-02-070437.843208Economics.png",
+        "name": "economics",
+        "title": "İqtisadiyyat"
+      }
+    ],
+    "resources": [
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2024-12-11T11:03:44.102636",
+        "datastore_active": true,
+        "description": "Bu resurs keçid dövrü ərzində saxlanılır və 3–6 ay ərzində silinəcəkdir.",
+        "format": "CSV",
+        "hash": "",
+        "id": "45abb80f-313a-495f-81ab-f0585448226d",
+        "last_modified": "2025-12-22T12:54:53.777877",
+        "metadata_modified": "2026-10-27T10:54:16.019175",
+        "mimetype": "text/csv",
+        "mimetype_inner": null,
+        "name": "Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla) - CSV (3–6 ay ərzində silinəcək)",
+        "name_translated": {
+          "az": "Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla) - CSV (3–6 ay ərzində silinəcək)",
+          "en": "CSV (will be removed within 3–6 months)"
+        },
+        "notes_translated": {
+          "az": "Bu resurs keçid dövrü ərzində saxlanılır və 3–6 ay ərzində silinəcəkdir.",
+          "en": "This resource is retained during the transition period and will be removed within 3–6 months."
+        },
+        "package_id": "48b43a92-0821-40b6-884d-c41606907a8b",
+        "position": 0,
+        "resource_type": null,
+        "size": 3223,
+        "state": "active",
+        "url": "https://admin.opendata.az/dataset/48b43a92-0821-40b6-884d-c41606907a8b/resource/45abb80f-313a-495f-81ab-f0585448226d/download/halinin-glirlri-v-xrclri-cari-qiymtlrl-mln.-manatla-dt_ba_005.csv",
+        "url_type": "upload"
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2026-10-27T10:54:16.956302",
+        "datastore_active": true,
+        "description": "Bu resurs \"Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)\" cədvəli üzrə statistik məlumatları strukturlaşdırılmış cədvəl şəklində təqdim edir. Məlumatlar cədvəl formasında təşkil olunmuşdur və onların emalı, təhlili və digər informasiya sistemlərinə inteqrasiyası üçün istifadə oluna bilər.",
+        "format": "CSV",
+        "hash": "",
+        "id": "cef84040-6902-40ab-9300-6d66e44d3695",
+        "last_modified": null,
+        "metadata_modified": "2026-10-27T10:54:16.949004",
+        "mimetype": null,
+        "mimetype_inner": null,
+        "name": "ehalinin_gelirleri_ve_xercleri_cari_qiymetlerle_mln_manatla",
+        "name_translated": {
+          "az": "ehalinin_gelirleri_ve_xercleri_cari_qiymetlerle_mln_manatla",
+          "en": "income_and_expenditure_of_population_current_prices_million_manat"
+        },
+        "notes_translated": {
+          "az": "Bu resurs \"Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)\" cədvəli üzrə statistik məlumatları strukturlaşdırılmış cədvəl şəklində təqdim edir. Məlumatlar cədvəl formasında təşkil olunmuşdur və onların emalı, təhlili və digər informasiya sistemlərinə inteqrasiyası üçün istifadə oluna bilər.",
+          "en": "This resource presents statistical data from the \"Income and expenditure of population (current prices, million manat)\" table in a structured tabular format. The data is organized in table form and can be used for processing, analysis and integration with other information systems."
+        },
+        "package_id": "48b43a92-0821-40b6-884d-c41606907a8b",
+        "position": 1,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://www.azstat.gov.az/AsisOpenDataApi/csv?table_id=DT_BA_005&lang=az",
+        "url_type": null
+      },
+      {
+        "cache_last_updated": null,
+        "cache_url": null,
+        "created": "2026-10-27T10:54:21.012503",
+        "datastore_active": false,
+        "description": "Bu resurs \"Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)\" cədvəli üzrə statistik məlumatları maşın tərəfindən oxuna bilən məlumat şəklində təqdim edir. Məlumatlar elektron sistemlər tərəfindən emal oluna bilən strukturda təqdim olunur və tətbiqlər, informasiya sistemləri və məlumat mübadiləsi üçün istifadəyə uyğundur.",
+        "format": "JSON",
+        "hash": "",
+        "id": "4368e061-18ac-4479-8a0e-c33aaea2c29b",
+        "last_modified": null,
+        "metadata_modified": "2026-10-27T10:54:21.003718",
+        "mimetype": null,
+        "mimetype_inner": null,
+        "name": "ehalinin_gelirleri_ve_xercleri_cari_qiymetlerle_mln_manatla",
+        "name_translated": {
+          "az": "ehalinin_gelirleri_ve_xercleri_cari_qiymetlerle_mln_manatla",
+          "en": "income_and_expenditure_of_population_current_prices_million_manat"
+        },
+        "notes_translated": {
+          "az": "Bu resurs \"Əhalinin gəlirləri və xərcləri (cari qiymətlərlə, mln. manatla)\" cədvəli üzrə statistik məlumatları maşın tərəfindən oxuna bilən məlumat şəklində təqdim edir. Məlumatlar elektron sistemlər tərəfindən emal oluna bilən strukturda təqdim olunur və tətbiqlər, informasiya sistemləri və məlumat mübadiləsi üçün istifadəyə uyğundur.",
+          "en": "This resource presents statistical data from the \"Income and expenditure of population (current prices, million manat)\" table in a machine-readable format. The data is provided in a structure that can be processed by electronic systems and is suitable for use by applications, information systems and data exchange."
+        },
+        "package_id": "48b43a92-0821-40b6-884d-c41606907a8b",
+        "position": 2,
+        "resource_type": null,
+        "size": null,
+        "state": "active",
+        "url": "https://www.azstat.gov.az/AsisOpenDataApi/data?table_id=DT_BA_005&lang=az",
+        "url_type": null
+      }
+    ],
+    "tags": [
+      {
+        "display_name": "national_accounts",
+        "id": "198d3298-9d5c-415c-a509-1db1a9e299fb",
+        "name": "national_accounts",
+        "state": "active",
+        "vocabulary_id": null
+      }
+    ],
+    "relationships_as_subject": [],
+    "relationships_as_object": [],
+    "rating": 0,
+    "ratings_count": 0,
+    "total_downloads": 0
+  }
+}
