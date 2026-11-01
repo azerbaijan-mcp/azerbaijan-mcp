@@ -48,9 +48,11 @@ uv sync --all-packages
 uv run pytest              # offline tests
 uv run pytest -m live      # contract tests against the real upstream services
 uv run ruff check . && uv run ruff format --check .
+uv run python scripts/release.py check   # registry metadata matches pyproject and README
 ```
 
-See [docs/adding-a-server.md](docs/adding-a-server.md) to add a server.
+See [docs/adding-a-server.md](docs/adding-a-server.md) to add a server and
+[docs/releasing.md](docs/releasing.md) to release one.
 
 ## License
 

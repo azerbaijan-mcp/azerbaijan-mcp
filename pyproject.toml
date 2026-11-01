@@ -29,6 +29,6 @@ allowed-confusables = ["ı"]
 known-first-party = ["azerbaijan_mcp_*"]
 
 [tool.pytest.ini_options]
-testpaths = ["packages"]
+testpaths = ["packages", "tests"]
 addopts = "-ra --import-mode=importlib -m 'not live'"
 markers = ["live: calls the real upstream service; run with `pytest -m live`"]

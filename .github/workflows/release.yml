@@ -1,0 +1,128 @@
+name: Release
+
+# One tag releases one package: <package>-v<version>, for example cbar-v0.1.0.
+# Final versions go to PyPI and the MCP Registry. Pre-releases (a, b, rc, dev) go to TestPyPI only.
+# See docs/releasing.md.
+
+on:
+  push:
+    tags: ["*-v[0-9]*.[0-9]*.[0-9]*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      package: ${{ steps.meta.outputs.package }}
+      dist: ${{ steps.meta.outputs.dist }}
+      version: ${{ steps.meta.outputs.version }}
+      dir: ${{ steps.meta.outputs.dir }}
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          python-version: "3.12"
+      - name: Resolve the tag to a package
+        id: meta
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          uv run --no-project scripts/release.py resolve "$TAG" >> "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
+      - name: Check registry metadata
+        env:
+          PACKAGE: ${{ steps.meta.outputs.package }}
+        run: uv run --no-project scripts/release.py check "$PACKAGE"
+      - name: Test
+        run: |
+          uv sync --locked --all-packages
+          uv run pytest
+      - name: Build
+        env:
+          DIST: ${{ steps.meta.outputs.dist }}
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          uv build --package "$DIST" --out-dir dist
+          ls -l dist
+          ls dist/*-"$VERSION"* > /dev/null
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish-testpypi:
+    if: needs.build.outputs.prerelease == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    if: needs.build.outputs.prerelease == 'false'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+
+  publish-registry:
+    if: needs.build.outputs.prerelease == 'false'
+    needs: [build, publish-pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.1
+      MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
+      DIST: ${{ needs.build.outputs.dist }}
+      VERSION: ${{ needs.build.outputs.version }}
+      PACKAGE_DIR: ${{ needs.build.outputs.dir }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Wait until PyPI serves the release with the registry marker
+        run: |
+          NAME=$(jq -r .name "$PACKAGE_DIR/server.json")
+          for _ in $(seq 1 30); do
+            if curl -fsS "https://pypi.org/pypi/${DIST}/${VERSION}/json" | grep -q "mcp-name: ${NAME}"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "PyPI does not serve ${DIST} ${VERSION} with 'mcp-name: ${NAME}' yet" >&2
+          exit 1
+      - name: Install mcp-publisher (pinned)
+        run: |
+          asset=mcp-publisher_linux_amd64.tar.gz
+          curl -fsSL -o "$asset" "https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/${asset}"
+          echo "${MCP_PUBLISHER_SHA256}  ${asset}" | sha256sum -c -
+          tar -xzf "$asset" mcp-publisher
+      - name: Log in to the registry with GitHub OIDC
+        run: ./mcp-publisher login github-oidc
+      - name: Publish to the registry
+        working-directory: ${{ env.PACKAGE_DIR }}
+        run: |
+          "$GITHUB_WORKSPACE/mcp-publisher" publish

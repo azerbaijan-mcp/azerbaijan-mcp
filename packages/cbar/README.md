@@ -1,3 +1,5 @@
+<!-- mcp-name: io.github.azerbaijan-mcp/cbar -->
+
 # azerbaijan-mcp-cbar
 
 MCP server for the **official exchange rates of the Central Bank of the Republic of Azerbaijan (CBAR)**.
