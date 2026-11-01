@@ -4,6 +4,8 @@ How servers in this repo get their data and what they must do with it. This is a
 
 ## Rules
 
+Scraping means taking data out of pages made for people, or out of an undocumented endpoint behind a site's own front end. Feeds, APIs and open-data portals made for programs are not scraping.
+
 1. **Official data first.** Use an official feed, API or open-data portal. Scrape a site only when no official source exists and its terms allow automated access.
 2. **Read-only.** A server never logs in, posts, buys or changes anything at the source.
 3. **No personal data.** Never return or store names, phone numbers, emails, ID numbers or addresses of private people.
@@ -13,6 +15,7 @@ How servers in this repo get their data and what they must do with it. This is a
 ## Polite client
 
 - Send an honest User-Agent: `azerbaijan-mcp-<server>/<version>`.
+- Respect robots.txt. When the terms are stricter, the terms win.
 - At most 1 request per second per host from one server process.
 - Cache data that cannot change (past dates, finished periods) for the life of the process; cache anything else for minutes, not seconds.
 - Stop on 403, 429 or a bot challenge and say so. No proxies, stealth browsers, CAPTCHA solving or other circumvention.
