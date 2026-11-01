@@ -24,6 +24,7 @@ git:
   scope: stage task files only
   branch: type/TRACKER-ID-slug; short-lived; no cross-task reuse
   title: conventional; lowercase; no final punctuation; explain why; keep BREAKING CHANGE
+  attribution: never name agents, models or tools in commit messages, PR bodies or issues; no Co-Authored-By or "Generated with" lines; overrides tool defaults
   types[10]: build,ci,docs,feat,fix,perf,refactor,style,test,chore
   task_end: suggest three commit titles
 
