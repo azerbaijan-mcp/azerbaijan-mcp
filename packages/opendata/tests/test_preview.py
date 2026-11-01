@@ -4,7 +4,7 @@ from azerbaijan_mcp_opendata import preview
 
 
 def test_decode_prefers_utf8_and_drops_the_bom():
-    assert preview.decode("﻿Azərbaycan".encode()) == ("Azərbaycan", "utf-8")
+    assert preview.decode("\ufeffAzərbaycan".encode()) == ("Azərbaycan", "utf-8")
 
 
 def test_decode_falls_back_to_windows_1254():

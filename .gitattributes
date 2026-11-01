@@ -1,0 +1,2 @@
+# portal_style.csv imitates a Windows export: its BOM and CRLF line ends must reach the tests unchanged.
+packages/opendata/tests/fixtures/portal_style.csv -text
