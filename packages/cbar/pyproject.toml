@@ -27,6 +27,11 @@ dependencies = [
 [project.scripts]
 azerbaijan-mcp-cbar = "azerbaijan_mcp_cbar.server:main"
 
+[project.urls]
+Homepage = "https://github.com/azerbaijan-mcp/azerbaijan-mcp"
+Source = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/tree/main/packages/cbar"
+Issues = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/issues"
+
 [build-system]
 requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
