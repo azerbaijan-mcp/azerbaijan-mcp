@@ -23,20 +23,20 @@ Things worth knowing:
 
 ## Install
 
-Not on PyPI yet. Add to your MCP client configuration, pointing at a checkout of this repo:
+Add to your MCP client configuration (requires [uv](https://docs.astral.sh/uv/)):
 
 ```json
 {
   "mcpServers": {
     "cbar": {
       "command": "uvx",
-      "args": ["--from", "/path/to/azerbaijan-mcp/packages/cbar", "azerbaijan-mcp-cbar"]
+      "args": ["azerbaijan-mcp-cbar"]
     }
   }
 }
 ```
 
-After the first release the arguments become just `["azerbaijan-mcp-cbar"]`.
+In Claude Code: `claude mcp add cbar -- uvx azerbaijan-mcp-cbar`.
 
 ## Data source and terms
 

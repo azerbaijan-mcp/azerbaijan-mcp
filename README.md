@@ -5,7 +5,7 @@ independently installable server per data source.
 
 | Server | Package | Source | Status |
 |---|---|---|---|
-| [cbar](packages/cbar) | `azerbaijan-mcp-cbar` | Central Bank of Azerbaijan official exchange rates (XML feed) | v0.1, not released yet |
+| [cbar](packages/cbar) | `azerbaijan-mcp-cbar` | Central Bank of Azerbaijan official exchange rates (XML feed) | v0.1 |
 | opendata | | [opendata.az](https://opendata.az) (CKAN API) | planned |
 | azstat | | State Statistical Committee open API | planned |
 | utils | | Offline helpers: IBAN / VÖEN checks, holidays, AZN in words | planned |
@@ -24,20 +24,20 @@ The full policy, including the checklist for adding a source, is in [docs/data-p
 
 ## Use
 
-Not on PyPI yet. From a checkout, add this to your MCP client configuration:
+Add this to your MCP client configuration (requires [uv](https://docs.astral.sh/uv/)):
 
 ```json
 {
   "mcpServers": {
     "cbar": {
       "command": "uvx",
-      "args": ["--from", "/path/to/azerbaijan-mcp/packages/cbar", "azerbaijan-mcp-cbar"]
+      "args": ["azerbaijan-mcp-cbar"]
     }
   }
 }
 ```
 
-After the first release the arguments become just `["azerbaijan-mcp-cbar"]`.
+In Claude Code: `claude mcp add cbar -- uvx azerbaijan-mcp-cbar`.
 
 ## Development
 
