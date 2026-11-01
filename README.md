@@ -20,6 +20,8 @@ independently installable server per data source.
   A server that scrapes a site whose terms forbid it ships as a local stdio server only, never hosted.
 - **Attribute.** Every response says where the data came from.
 
+The full policy, including the checklist for adding a source, is in [docs/data-policy.md](docs/data-policy.md).
+
 ## Use
 
 Not on PyPI yet. From a checkout, add this to your MCP client configuration:

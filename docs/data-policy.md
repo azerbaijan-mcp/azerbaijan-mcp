@@ -1,0 +1,53 @@
+# Data and legal policy
+
+How servers in this repo get their data and what they must do with it. This is a working policy, not legal advice.
+
+## Rules
+
+1. **Official data first.** Use an official feed, API or open-data portal. Scrape a site only when no official source exists and its terms allow automated access.
+2. **Read-only.** A server never logs in, posts, buys or changes anything at the source.
+3. **No personal data.** Never return or store names, phone numbers, emails, ID numbers or addresses of private people.
+4. **Attribute.** Every response names the source and links to it. Say what the data is not (for example "not bank buy/sell rates").
+5. **Terms win over robots.txt.** If a site's terms forbid automated access, there is no server for that site unless the operator agrees in writing.
+
+## Polite client
+
+- Send an honest User-Agent: `azerbaijan-mcp-<server>/<version>`.
+- At most 1 request per second per host from one server process.
+- Cache data that cannot change (past dates, finished periods) for the life of the process; cache anything else for minutes, not seconds.
+- Stop on 403, 429 or a bot challenge and say so. No proxies, stealth browsers, CAPTCHA solving or other circumvention.
+- Bound every response: cap rows, bytes and pages.
+- Retry at most once, and only for network errors and 5xx.
+
+## Hosting
+
+A server is hosted only when its source is official or open and allows it. A server for a site whose terms restrict automated access ships as a local stdio server, runs from the user's own connection and is never offered as a hosted service.
+
+## Before adding a source
+
+Copy this checklist into the server's issue and fill it in:
+
+- [ ] Publisher, and why it is the official or best source
+- [ ] Terms or licence URL, the clauses on automated access, date read
+- [ ] robots.txt snapshot and date
+- [ ] Data licence and attribution wording (for example CC0, CC-BY)
+- [ ] Rate limit and cache decided
+- [ ] Personal data check: nothing about private people is returned or stored
+- [ ] Publisher contacted: reply, or no reply, recorded
+- [ ] Decision: go, local-only or no-go, with the reason
+
+Every server README has a "Data source and terms" section with the answers.
+
+## Sources (as of 2026-11-01)
+
+| Source | Access | Terms or licence | Decision |
+|---|---|---|---|
+| CBAR exchange rates | Official XML feed | The rates page states no licence or reuse terms and invites importing the XML URL | Go: attribute, cache, honest User-Agent |
+| opendata.az | CKAN API (`package_search`, `package_show`) | The portal states no terms; each dataset has its own licence, mostly CC0 | Go, after asking the operator to confirm reuse terms |
+| State Statistical Committee (azstat) | Undocumented JSON API | No terms stated; asks users to cite the source | Pending: ask the Committee about terms and stability |
+| e-qanun.az | No official API | Not reviewed | Blocked until the Ministry of Justice answers |
+| Classifieds and job sites | No official API found | Not reviewed; at least one user agreement appears to restrict automated access | Not started: terms review comes first |
+
+## Takedown and contact
+
+If you operate a source this project uses and want changes or removal, open an issue in this repository's tracker. Access is changed or removed promptly.
