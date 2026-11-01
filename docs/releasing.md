@@ -22,14 +22,14 @@ Each package is released on its own, by pushing a tag named `<package>-v<version
 
 ## Dry run on TestPyPI
 
-1. On a throwaway branch set the version to a pre-release, for example `0.1.0rc1` in `packages/cbar/pyproject.toml`, then run `python scripts/release.py stamp cbar`.
+1. On a throwaway branch set the version to a pre-release, for example `0.1.0rc1` in `packages/cbar/pyproject.toml`, then run `uv lock` and `python scripts/release.py stamp cbar`. Without `uv lock`, `uv sync --locked` fails because the lockfile records each package's version.
 2. Commit, tag that commit `cbar-v0.1.0rc1` and push only the tag: `git tag cbar-v0.1.0rc1 && git push origin cbar-v0.1.0rc1`.
 3. Watch the Release workflow, then install the result (untested until the first dry run; adjust the flags if uv has changed): `uvx --index-strategy unsafe-best-match --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ azerbaijan-mcp-cbar==0.1.0rc1`.
 4. Delete the branch and the tag. TestPyPI never accepts a version twice, so the next dry run needs `rc2`.
 
 ## Release
 
-1. Bump `version` in `packages/<package>/pyproject.toml`, run `python scripts/release.py stamp <package>`, and merge that through a PR with green CI.
+1. Bump `version` in `packages/<package>/pyproject.toml`, run `uv lock` and `python scripts/release.py stamp <package>`, and merge that through a PR with green CI.
 2. Tag the merge commit on `main` and push the tag: `git tag cbar-v0.1.0 && git push origin cbar-v0.1.0`.
 3. The workflow checks the tag against `pyproject.toml`, `server.json` and the README marker, runs the tests, builds, publishes to PyPI, waits until PyPI serves the version with the marker, then publishes `server.json` to the registry.
 4. Check the PyPI page, then `curl 'https://registry.modelcontextprotocol.io/v0.1/servers?search=cbar'`, then run `uvx azerbaijan-mcp-cbar` on a clean machine.
@@ -38,6 +38,7 @@ Each package is released on its own, by pushing a tag named `<package>-v<version
 
 - PyPI never accepts the same version twice. Fix the problem and release the next patch version.
 - If PyPI succeeded and the registry step failed, re-run only the `publish-registry` job from the Actions page.
+- `invalid-publisher` from PyPI or TestPyPI means no trusted publisher entry matches. The failed step prints the claims it presented (owner, repository, workflow, environment). Compare them with the entry. PyPI and TestPyPI are separate sites with separate entries. After fixing it, use "Re-run failed jobs" on the run; no new tag is needed.
 - The registry is still in preview. Read its current docs before the first release.
 
 ## Pinned tooling
