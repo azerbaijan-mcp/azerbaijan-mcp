@@ -1,0 +1,39 @@
+[project]
+name = "azerbaijan-mcp-azstat"
+version = "0.1.0"
+description = "MCP server for the State Statistical Committee of Azerbaijan: search its statistical tables and read their data."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Shamkhal Maharramov" }]
+keywords = ["mcp", "model-context-protocol", "azerbaijan", "statistics", "azstat"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "fastmcp>=4,<5",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+]
+
+[project.scripts]
+azerbaijan-mcp-azstat = "azerbaijan_mcp_azstat.server:main"
+
+[project.urls]
+Homepage = "https://github.com/azerbaijan-mcp/azerbaijan-mcp"
+Source = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/tree/main/packages/azstat"
+Issues = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/issues"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/azerbaijan_mcp_azstat"]
