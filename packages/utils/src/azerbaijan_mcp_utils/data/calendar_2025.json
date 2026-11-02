@@ -1,0 +1,44 @@
+{
+  "year": 2025,
+  "decision": "Decision of the Collegium of the Ministry of Labour and Social Protection of the Population of 16 December 2024, No. 3-17/3-5-31/2024, approving the working-time norm and the production calendar for 2025",
+  "url": "https://sosial.gov.az/faydali/istehsalat-teqvimi/2025-ci-ilin-istehsalat-teqvimi",
+  "cabinet_decisions": [
+    "Decision of the Cabinet of Ministers of 11 December 2024, No. 521, on determining the days of the Novruz, Ramadan and Qurban holidays for 2025",
+    "Decision of the Cabinet of Ministers of 28 November 2024, No. 499, on changing the places of working and rest days",
+    "Decision of the Central Election Commission of 27 November 2024, No. 49/238, declaring 29 January 2025 the day of the municipal elections"
+  ],
+  "read_on": "2026-11-02",
+  "entries": [
+    {"date": "2025-01-01", "kind": "fixed", "name_az": "Yeni il bayramı", "name_en": "New Year"},
+    {"date": "2025-01-02", "kind": "fixed", "name_az": "Yeni il bayramı", "name_en": "New Year"},
+    {"date": "2025-01-20", "kind": "mourning", "name_az": "Ümumxalq hüzn günü", "name_en": "Day of National Mourning"},
+    {"date": "2025-01-29", "kind": "election", "name_az": "Bələdiyyə seçkiləri günü", "name_en": "Municipal elections day (non-working where the election is held)"},
+    {"date": "2025-03-08", "kind": "fixed", "name_az": "Qadınlar günü", "name_en": "International Women's Day"},
+    {"date": "2025-03-20", "kind": "decree", "name_az": "Novruz bayramı", "name_en": "Novruz"},
+    {"date": "2025-03-21", "kind": "decree", "name_az": "Novruz bayramı", "name_en": "Novruz"},
+    {"date": "2025-03-22", "kind": "decree", "name_az": "Novruz bayramı", "name_en": "Novruz"},
+    {"date": "2025-03-23", "kind": "decree", "name_az": "Novruz bayramı", "name_en": "Novruz"},
+    {"date": "2025-03-24", "kind": "decree", "name_az": "Novruz bayramı", "name_en": "Novruz"},
+    {"date": "2025-03-30", "kind": "decree", "name_az": "Ramazan bayramı", "name_en": "Ramadan Bayram (Eid al-Fitr)"},
+    {"date": "2025-03-31", "kind": "decree", "name_az": "Ramazan bayramı", "name_en": "Ramadan Bayram (Eid al-Fitr)"},
+    {"date": "2025-05-09", "kind": "fixed", "name_az": "Faşizm üzərində qələbə günü", "name_en": "Victory over Fascism Day"},
+    {"date": "2025-05-28", "kind": "fixed", "name_az": "Müstəqillik Günü", "name_en": "Independence Day"},
+    {"date": "2025-06-06", "kind": "decree", "name_az": "Qurban bayramı", "name_en": "Qurban Bayram (Eid al-Adha)"},
+    {"date": "2025-06-07", "kind": "decree", "name_az": "Qurban bayramı", "name_en": "Qurban Bayram (Eid al-Adha)"},
+    {"date": "2025-06-15", "kind": "fixed", "name_az": "Azərbaycan xalqının milli qurtuluş günü", "name_en": "National Salvation Day of the Azerbaijani People"},
+    {"date": "2025-06-26", "kind": "fixed", "name_az": "Azərbaycan Respublikasının Silahlı Qüvvələri günü", "name_en": "Armed Forces Day"},
+    {"date": "2025-11-08", "kind": "fixed", "name_az": "Zəfər Günü", "name_en": "Victory Day"},
+    {"date": "2025-11-09", "kind": "fixed", "name_az": "Azərbaycan Respublikasının Dövlət bayrağı günü", "name_en": "State Flag Day"},
+    {"date": "2025-12-31", "kind": "fixed", "name_az": "Dünya azərbaycanlılarının həmrəyliyi günü", "name_en": "World Azerbaijanis' Solidarity Day"}
+  ],
+  "rest_days": {
+    "five_day": ["2025-01-03", "2025-03-10", "2025-03-25", "2025-03-26", "2025-04-01", "2025-06-09", "2025-06-16", "2025-11-10", "2025-11-11"],
+    "six_day": ["2025-03-25", "2025-04-01", "2025-06-16", "2025-11-10"]
+  },
+  "official_totals": {
+    "five_day_working_days": 239,
+    "holidays": 19,
+    "overlapping_holidays": 0,
+    "other_days": 2
+  }
+}
