@@ -14,6 +14,7 @@ members = [
     "azerbaijan-mcp-azstat",
     "azerbaijan-mcp-cbar",
     "azerbaijan-mcp-eqanun",
+    "azerbaijan-mcp-izahli",
     "azerbaijan-mcp-opendata",
     "azerbaijan-mcp-utils",
     "azerbaijan-mcp-workspace",
@@ -125,6 +126,21 @@ dependencies = [
 requires-dist = [
     { name = "fastmcp", specifier = ">=4,<5" },
     { name = "httpx", specifier = ">=0.27" },
+    { name = "pydantic", specifier = ">=2.7" },
+]
+
+[[package]]
+name = "azerbaijan-mcp-izahli"
+version = "0.1.0"
+source = { editable = "packages/izahli" }
+dependencies = [
+    { name = "fastmcp" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastmcp", specifier = ">=4,<5" },
     { name = "pydantic", specifier = ">=2.7" },
 ]
 
