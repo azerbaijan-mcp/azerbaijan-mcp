@@ -1,0 +1,39 @@
+[project]
+name = "azerbaijan-mcp-eqanun"
+version = "0.1.0"
+description = "Local MCP server for e-qanun.az, the Azerbaijani legal acts base: search acts, read articles with their amendment notes, always with citations."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Shamkhal Maharramov" }]
+keywords = ["mcp", "model-context-protocol", "azerbaijan", "legal-acts", "e-qanun"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+]
+dependencies = [
+  "fastmcp>=4,<5",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+]
+
+[project.scripts]
+azerbaijan-mcp-eqanun = "azerbaijan_mcp_eqanun.server:main"
+
+[project.urls]
+Homepage = "https://github.com/azerbaijan-mcp/azerbaijan-mcp"
+Source = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/tree/main/packages/eqanun"
+Issues = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/issues"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/azerbaijan_mcp_eqanun"]

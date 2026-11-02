@@ -13,6 +13,7 @@ resolution-markers = [
 members = [
     "azerbaijan-mcp-azstat",
     "azerbaijan-mcp-cbar",
+    "azerbaijan-mcp-eqanun",
     "azerbaijan-mcp-opendata",
     "azerbaijan-mcp-utils",
     "azerbaijan-mcp-workspace",
@@ -105,6 +106,23 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "defusedxml", specifier = ">=0.7.1" },
+    { name = "fastmcp", specifier = ">=4,<5" },
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "pydantic", specifier = ">=2.7" },
+]
+
+[[package]]
+name = "azerbaijan-mcp-eqanun"
+version = "0.1.0"
+source = { editable = "packages/eqanun" }
+dependencies = [
+    { name = "fastmcp" },
+    { name = "httpx" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
     { name = "fastmcp", specifier = ">=4,<5" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "pydantic", specifier = ">=2.7" },
