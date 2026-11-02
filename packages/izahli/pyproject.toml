@@ -1,0 +1,38 @@
+[project]
+name = "azerbaijan-mcp-izahli"
+version = "0.1.0"
+description = "Local MCP server for the Azerbaijani explanatory dictionary: look words up, search by meaning and browse in print order, from a database on your own computer."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Shamkhal Maharramov" }]
+keywords = ["mcp", "model-context-protocol", "azerbaijan", "azerbaijani", "dictionary"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+  "fastmcp>=4,<5",
+  "pydantic>=2.7",
+]
+
+[project.scripts]
+azerbaijan-mcp-izahli = "azerbaijan_mcp_izahli.server:main"
+
+[project.urls]
+Homepage = "https://github.com/azerbaijan-mcp/azerbaijan-mcp"
+Source = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/tree/main/packages/izahli"
+Issues = "https://github.com/azerbaijan-mcp/azerbaijan-mcp/issues"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/azerbaijan_mcp_izahli"]
