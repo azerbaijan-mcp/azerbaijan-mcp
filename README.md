@@ -9,7 +9,7 @@ independently installable server per data source.
 | [opendata](packages/opendata) | `azerbaijan-mcp-opendata` | [opendata.az](https://opendata.az) open data portal (CKAN API): dataset search and CSV/JSON previews | unreleased |
 | [azstat](packages/azstat) | `azerbaijan-mcp-azstat` | State Statistical Committee open data API: search about 1,800 statistical tables and read their data | v0.1 |
 | [utils](packages/utils) | `azerbaijan-mcp-utils` | Offline helpers: IBAN and phone checks, amounts in manat in words, Latin and Cyrillic transliteration, official holidays and working days | unreleased |
-| eqanun | | e-qanun.az legal acts | planned |
+| [eqanun](packages/eqanun) | `azerbaijan-mcp-eqanun` | [e-qanun.az](https://e-qanun.az) legal acts, local only: search acts and read articles with their amendment notes | unreleased |
 
 Names: the GitHub organization and repository are `azerbaijan-mcp`, packages are
 `azerbaijan-mcp-<source>` and MCP Registry names are `io.github.azerbaijan-mcp/<source>`.

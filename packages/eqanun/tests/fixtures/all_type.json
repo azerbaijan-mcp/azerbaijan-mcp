@@ -1,0 +1,571 @@
+{
+ "data": [
+  {
+   "id": 25,
+   "name": "AZƏRBAYCAN RESPUBLİKASININ KONSTİTUSİYASI VƏ REFERENDUM AKTLARI (9)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 26,
+   "name": "Konstitusiya (6)",
+   "sectionId": 0,
+   "parentId": 25,
+   "canceled": false
+  },
+  {
+   "id": 27,
+   "name": "Referendum aktları (3)",
+   "sectionId": 0,
+   "parentId": 25,
+   "canceled": false
+  },
+  {
+   "id": 28,
+   "name": "AZƏRBAYCAN RESPUBLİKASININ KONSTİTUSİYA QANUNLARI (56)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 29,
+   "name": "AZƏRBAYCAN RESPUBLİKASININ QANUNLARI (7181)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 30,
+   "name": "Qanunlar (7154)",
+   "sectionId": 0,
+   "parentId": 29,
+   "canceled": false
+  },
+  {
+   "id": 31,
+   "name": "AZƏRBAYCAN RESPUBLİKASI PREZİDENTİNİN FƏRMANLARI (9562)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 32,
+   "name": "AZƏRBAYCAN RESPUBLİKASI NAZİRLƏR KABİNETİNİN QƏRARLARI (9713)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 33,
+   "name": "MƏRKƏZİ İCRA HAKİMİYYƏTİ ORQANLARININ NORMATİV HÜQUQİ AKTLARI (4140)",
+   "sectionId": 0,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 34,
+   "name": "Daxili İşlər Nazirliyi (387)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 35,
+   "name": "Ekologiya və Təbii Sərvətlər Nazirliyi (26)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 36,
+   "name": "Energetika Nazirliyi (38)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 37,
+   "name": "Ədliyyə Nazirliyi (510)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 38,
+   "name": "Əmək və Əhalinin Sosial Müdafiəsi Nazirliyi (313)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 39,
+   "name": "Fövqəladə Hallar Nazirliyi (70)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 40,
+   "name": "Gənclər və İdman Nazirliyi (1)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 41,
+   "name": "Xarici İşlər Nazirliyi (67)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 42,
+   "name": "İqtisadiyyat Nazirliyi (203)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 43,
+   "name": "Kənd Təsərrüfatı Nazirliyi (82)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 44,
+   "name": "Maliyyə Nazirliyi (308)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 45,
+   "name": "Mədəniyyət Nazirliyi (2)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 46,
+   "name": "Müdafiə Nazirliyi (0)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 47,
+   "name": "Müdafiə Sənayesi Nazirliyi (5)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 48,
+   "name": "Rəqəmsal İnkişaf və Nəqliyyat Nazirliyi (129)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 49,
+   "name": "Səhiyyə Nazirliyi (109)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 50,
+   "name": "Elm və Təhsil Nazirliyi (94)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 51,
+   "name": "Vergilər Nazirliyi (76)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 52,
+   "name": "Ailə, Qadın və Uşaq Problemləri üzrə Dövlət Komitəsi (5)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 53,
+   "name": "Diasporla İş üzrə Dövlət Komitəsi (3)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 54,
+   "name": "Dini Qurumlarla İş üzrə Dövlət Komitəsi (16)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 55,
+   "name": "Dövlət Gömrük Komitəsi (197)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 56,
+   "name": "Dövlət Statistika Komitəsi (682)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 57,
+   "name": "Dövlət Şəhərsalma və Arxitektura Komitəsi (75)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 58,
+   "name": "Əmlak Məsələləri Dövlət Komitəsi (72)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 59,
+   "name": "Qaçqınların və Məcburi Köçkünlərin İşləri üzrə Dövlət Komitəsi (15)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 60,
+   "name": "Dövlət Miqrasiya Xidməti (138)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 61,
+   "name": "Dövlət Sərhəd Xidməti (7)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 62,
+   "name": "Dövlət Təhlükəsizliyi Xidməti (19)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 63,
+   "name": "Xarici Kəşfiyyat Xidməti (0)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 64,
+   "name": "Səfərbərlik və Hərbi Xidmətə Çağırış üzrə Dövlət Xidməti (5)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 65,
+   "name": "Qida Təhlükəsizliyi Agentliyi (37)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 66,
+   "name": "Dövlət Turizm Agentliyi (9)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 67,
+   "name": "Dövlət İmtahan Mərkəzi (0)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 73,
+   "name": "KONSTİTUSİYA MƏHKƏMƏSİNİN QƏRARLARI (468)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 74,
+   "name": "AZƏRBAYCAN RESPUBLİKASI MƏRKƏZİ SEÇKİ KOMİSSİYASININ QƏRARLARI, TƏLİMATLARI VƏ İZAHLARI (3896)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 75,
+   "name": "MALİYYƏ BAZARLARI TƏNZİMLƏYİCİSİNİN QƏRARLARI (460)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 76,
+   "name": "Maliyyə Bazarlarına Nəzarət Palatasının qərarı (57)",
+   "sectionId": 1,
+   "parentId": 75,
+   "canceled": false
+  },
+  {
+   "id": 77,
+   "name": "Mərkəzi bankın qərarı (395)",
+   "sectionId": 1,
+   "parentId": 75,
+   "canceled": false
+  },
+  {
+   "id": 78,
+   "name": "Maliyyə Monitorinqi Xidməti (8)",
+   "sectionId": 1,
+   "parentId": 75,
+   "canceled": false
+  },
+  {
+   "id": 79,
+   "name": "MƏHKƏMƏ-HÜQUQ ŞURASININ QƏRARLARI (37)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 80,
+   "name": "AZƏRBAYCAN RESPUBLİKASI AUDİOVİZUAL ŞURASININ QƏRARLARI (8)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 81,
+   "name": "YERLİ ÖZÜNÜİDARƏ ORQANLARININ QƏRARLARI (1538)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 82,
+   "name": "YERLİ İCRA HAKİMİYYƏTİ ORQANLARININ QƏRARLARI (75)",
+   "sectionId": 1,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 83,
+   "name": "AZƏRBAYCAN RESPUBLİKASI MİLLİ MƏCLİSİNİN QƏRARLARI (1853)",
+   "sectionId": 2,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 84,
+   "name": "AZƏRBAYCAN RESPUBLİKASI PREZİDENTİNİN SƏRƏNCAMLARI (16929)",
+   "sectionId": 2,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 85,
+   "name": "AZƏRBAYCAN RESPUBLİKASI NAZİRLƏR KABİNETİNİN SƏRƏNCAMLARI (3735)",
+   "sectionId": 2,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 86,
+   "name": "Azərbaycan Respublikasının Tarif (qiymət) Şurası (170)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 87,
+   "name": "Azərbaycan Respublikası Ali Məhkəməsinin qərarları (114)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 88,
+   "name": "BMT-nin Təhlükəsizlik Şurası (4)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 89,
+   "name": "İnsan Hüquqları üzrə Avropa Məhkəməsi (25)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 91,
+   "name": "Azərbaycan Respublikasının Prezidenti yanında Vətəndaşlara Xidmət və Sosial İnnovasiyalar üzrə Dövlət Agentliyi (72)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 92,
+   "name": "Milli Təhlükəsizlik Nazirliyi (11)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 93,
+   "name": "Qiymətli Kağızlar üzrə Dövlət Komitəsi (122)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 94,
+   "name": "Standartlaşdırma, Metrologiya və Patent üzrə Dövlət Komitəsi (41)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 95,
+   "name": "Dövlət Sosial Müdafiə Fondu (33)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 96,
+   "name": "Dövlət Torpaq və Xəritəçəkmə Komitəsi (5)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 97,
+   "name": "Azərbaycan Respublikası Prezidenti yanında Dövlət Qulluğu Məsələləri üzrə Komissiya (14)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 98,
+   "name": "Tələbə Qəbulu üzrə Dövlət Komissiyası (30)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 99,
+   "name": "Mədəniyyət və Turizm Nazirliyi (12)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 100,
+   "name": "Dövlət Dəniz Administrasiyası (21)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 101,
+   "name": "Dövlət Mülki Aviasiya Administrasiyası (0)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 102,
+   "name": "Nəqliyyat Nazirliyi (30)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 103,
+   "name": "Azərbaycan Respublikası Müəllif Hüquqları Agentliyi (6)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 104,
+   "name": "Azərbaycan Respublikasının Satınalmalar üzrə Dövlət Agentliyi (2)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 105,
+   "name": "Milli Arxiv İdarəsi (38)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 107,
+   "name": "Məcəllələr (27)",
+   "sectionId": 0,
+   "parentId": 29,
+   "canceled": false
+  },
+  {
+   "id": 119,
+   "name": "Alternativ və Bərpa Olunan Enerji Mənbələri üzrə Dövlət Agentliyi (1)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": true
+  },
+  {
+   "id": 120,
+   "name": "Beynəlxalq müqavilələr (4)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 121,
+   "name": "Köməkçi Sənədlər (12)",
+   "sectionId": 3,
+   "parentId": null,
+   "canceled": false
+  },
+  {
+   "id": 155,
+   "name": "Azərbaycan Dövlət Su Ehtiyatları Agentliyi (1)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  },
+  {
+   "id": 156,
+   "name": "Azərbaycan Respublikasının Prezidenti yanında Antiinhisar və İstehlak Bazarına Nəzarət Dövlət Agentliyi (1)",
+   "sectionId": 0,
+   "parentId": 33,
+   "canceled": false
+  }
+ ]
+}

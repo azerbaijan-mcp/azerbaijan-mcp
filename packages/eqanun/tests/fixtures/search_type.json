@@ -1,0 +1,39 @@
+{
+ "data": [
+  {
+   "rowNum": 1,
+   "id": 46944,
+   "citation": "",
+   "title": "Azərbaycan Respublikasının Mülki Məcəlləsi",
+   "typeName": "Məcəllələr",
+   "statusName": "Qüvvədədir",
+   "effectDate": null,
+   "registerCode": "",
+   "registerDate": null,
+   "acceptDate": "28.12.1999",
+   "classCode": "1999-12-28",
+   "htmlPath": null,
+   "fields": null,
+   "relation": null,
+   "classCodes": null
+  },
+  {
+   "rowNum": 2,
+   "id": 46945,
+   "citation": "",
+   "title": "Azərbaycan Respublikasının Mülki Prosessual Məcəlləsi",
+   "typeName": "Məcəllələr",
+   "statusName": "Qüvvədədir",
+   "effectDate": null,
+   "registerCode": "",
+   "registerDate": null,
+   "acceptDate": "28.12.1999",
+   "classCode": "1999-12-28",
+   "htmlPath": null,
+   "fields": null,
+   "relation": null,
+   "classCodes": null
+  }
+ ],
+ "totalCount": 2
+}
