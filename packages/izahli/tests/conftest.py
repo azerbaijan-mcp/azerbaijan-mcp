@@ -6,9 +6,10 @@ import sqlite3
 from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 
+import httpx
 import pytest
 
-from azerbaijan_mcp_izahli import index
+from azerbaijan_mcp_izahli import asset, index
 from azerbaijan_mcp_izahli.store import Store
 
 LOCAL_HOSTS = {"127.0.0.1", "::1", "localhost"}
@@ -114,11 +115,14 @@ def _host(address) -> str:
 
 
 @pytest.fixture(autouse=True, scope="module")
-def no_network():
-    """The server never uses the network, so every test runs with outside access blocked.
+def no_network(request):
+    """Offline tests never reach the real release page: outside connections fail at once.
 
     Loopback stays open because asyncio itself connects a pair of local sockets on Windows.
     """
+    if request.node.get_closest_marker("live"):  # the live tests may use the real network
+        yield
+        return
     real_connect, real_getaddrinfo = socket.socket.connect, socket.getaddrinfo
 
     def connect(self, address):
@@ -180,6 +184,38 @@ def source_db(tmp_path_factory) -> Path:
 @pytest.fixture(scope="session")
 def cache_dir(tmp_path_factory) -> Path:
     return tmp_path_factory.mktemp("cache")
+
+
+class Site:
+    """A fake release page. It answers the requests it gets with the answers it was given, in
+    turn and the last one for ever, and keeps the requests. An answer is a response, an error to
+    raise, or a function that makes a fresh response."""
+
+    def __init__(self, *answers) -> None:
+        self.answers = list(answers)
+        self.requests: list[httpx.Request] = []
+
+    def __call__(self, request: httpx.Request) -> httpx.Response:
+        self.requests.append(request)
+        answer = self.answers.pop(0) if len(self.answers) > 1 else self.answers[0]
+        if isinstance(answer, Exception):
+            raise answer
+        return answer if isinstance(answer, httpx.Response) else answer()
+
+    @property
+    def transport(self) -> httpx.MockTransport:
+        return httpx.MockTransport(self)
+
+
+@pytest.fixture
+def site() -> type[Site]:
+    return Site
+
+
+@pytest.fixture(scope="session")
+def asset_pack(source_db: Path, tmp_path_factory) -> asset.Packed:
+    """The invented dictionary, packed the way the real one is published."""
+    return asset.pack(source_db, tmp_path_factory.mktemp("asset") / "dictionary.sqlite.gz")
 
 
 @pytest.fixture(scope="session")

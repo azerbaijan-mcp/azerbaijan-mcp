@@ -6,9 +6,10 @@
 izahlı lüğəti* (four volumes, about 45,000 entries). It looks words up, finds entries by what they say and
 walks the dictionary in print order, with the volume, page and column of every entry.
 
-The dictionary is a copyrighted print work, and no open licence and no official online edition were found,
-so this package **ships no dictionary text**. It reads a SQLite database that you extract from your own copy
-of the volumes and point it to with `IZAHLI_DB`. It is never offered as a hosted service.
+On first use the server downloads the dictionary's database once, 5.6 MB, from this project's release page and
+keeps it in your cache folder with a search index built from it. The dictionary is a copyrighted print work
+and the project has no licence for it: read *Data source and terms* below. Set `IZAHLI_DB` to use a database
+of your own instead. The server runs on your computer and is never offered as a hosted service.
 
 ## Tools
 
@@ -51,11 +52,12 @@ Things worth knowing:
   this server.
 - **Etymology.** `origin` is the note in square brackets after the part of speech (`ər.`, `fars.`, `fr.`,
   `əsli lat.`); about 11,000 entries have one.
-- **The index.** On first use the server builds a search index from your database (about 10 seconds and
-  30 MB for the whole dictionary) in the cache folder (`%LOCALAPPDATA%\azerbaijan-mcp\izahli` on Windows,
-  `~/Library/Caches/azerbaijan-mcp/izahli` on macOS, `~/.cache/azerbaijan-mcp/izahli` elsewhere) and reuses
-  it until the database file changes. Each database gets its own index file, so several can share the
-  folder. Your database is opened read-only and never written. The cache can be deleted at any time.
+- **The first call** downloads the database and builds the index, which takes a few seconds: about 10
+  seconds and 30 MB of index for the whole dictionary. Both are kept in the cache folder
+  (`%LOCALAPPDATA%\azerbaijan-mcp\izahli` on Windows, `~/Library/Caches/azerbaijan-mcp/izahli` on macOS,
+  `~/.cache/azerbaijan-mcp/izahli` elsewhere) and reused until the database file changes. Each database gets
+  its own index file, so several can share the folder. A database you name is opened read-only and never
+  written. The cache can be deleted at any time: the next call fetches and builds again.
 - **Not covered:** inflected forms (no morphology), and the dictionary's other editions and sibling
   dictionaries.
 
@@ -68,23 +70,31 @@ Add to your MCP client configuration (requires [uv](https://docs.astral.sh/uv/))
   "mcpServers": {
     "izahli": {
       "command": "uvx",
-      "args": ["azerbaijan-mcp-izahli"],
-      "env": { "IZAHLI_DB": "C:\\dictionaries\\azerbaycan_lugeti_1-4.sqlite" }
+      "args": ["azerbaijan-mcp-izahli"]
     }
   }
 }
 ```
 
-In Claude Code: `claude mcp add izahli --env IZAHLI_DB=/path/to/azerbaycan_lugeti_1-4.sqlite -- uvx azerbaijan-mcp-izahli`.
+In Claude Code: `claude mcp add izahli -- uvx azerbaijan-mcp-izahli`.
+
+Three optional settings go in the client's `env`:
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `IZAHLI_DB` | none | Path of the dictionary database. Without it every tool answers that it is not set. |
-| `IZAHLI_CACHE_DIR` | the cache folder above | Where the index is kept. |
+| `IZAHLI_DB` | none | Path of a dictionary database of your own. The published one is then not downloaded. |
+| `IZAHLI_DATA_URL` | the release page of this repository | A mirror of the published database, https only (http for this computer). Its SHA-256 is still checked. |
+| `IZAHLI_CACHE_DIR` | the cache folder above | Where the database and the index are kept. |
 
 ## The database
 
-The server reads one table, `entries`, and only the columns below. A `metadata` table is optional.
+The published database is the file `izahli-dictionary-1.sqlite.gz` of the release `izahli-data-1`: 45,353
+entries, 5,657,352 bytes, SHA-256 `44515ffca32d7cefc9f659bbe1ecefa82dc6908f17b5d434daffd1f921162022`, which
+the package pins, so a file that differs is never used. `python -m azerbaijan_mcp_izahli.asset source.sqlite
+out.sqlite.gz` packs a database that way and prints the numbers to pin.
+
+A database of your own needs one table, `entries`, and the server reads only the columns below. A
+`metadata` table is optional.
 
 ```sql
 CREATE TABLE entries (
@@ -102,31 +112,38 @@ CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 
 `metadata` keys that are used: `database_title`, which names the source in every answer, and `entry_count`,
 which is checked against the table so that a truncated file is refused. Other columns and tables are
-ignored. The database this server was developed against has a full-text index of its own; the server does
-not use it, because it misses every word that starts a sentence with a capital İ (`iki` finds 1,324 of the
-1,656 entries that have it). A script that builds the database from the PDFs is tracked in MCP-31.
+ignored. The database the published one was made from has a full-text index of its own; the server does not
+use it, because it misses every word that starts a sentence with a capital İ (`iki` finds 1,324 of the
+1,656 entries that have it). A script that rebuilds the database from the PDFs is tracked in MCP-31.
 
 ## Data source and terms
 
-The server fetches nothing at run time. Answers to the checklist in the repository's
-[data policy](../../docs/data-policy.md), read on 2026-11-03:
+The only request the server makes is the one download of the database, from github.com, once for each cache
+folder. Answers to the checklist in the repository's [data policy](../../docs/data-policy.md), read on
+2026-11-03:
 
 - **Publisher:** bibliographies list the dictionary as published by Şərq-Qərb, Baku, 2006 (compiled by
   Ə. Orucov and others, edited by A. Axundov). No official online edition was found; azleks.az offers an
   electronic version behind a registration whose terms are unclear, and unofficial scans circulate.
-- **Terms and licence:** none found, so the text is treated as all rights reserved. That is why no text is
-  in this package, in its tests or anywhere in the repository, and why the server is never hosted.
-- **robots.txt, rate limit and cache:** not applicable, nothing is requested at run time. The tests run with
+- **Terms and licence:** none found, so the text is treated as all rights reserved. The project's owner
+  decided on 2026-11-03 to publish the extracted database as a release asset of this repository all the
+  same, without asking the publisher. That departs from the data policy's rule that terms win and carries
+  the risk of a complaint. The text is in that release asset only, never in the package, the repository or
+  the tests. If the publisher, the authors or their heirs object, the asset is deleted promptly.
+- **robots.txt, rate limit and cache:** not applicable to a release file. The download sends the
+  User-Agent `azerbaijan-mcp-izahli/<version> (+<repository URL>)`, makes one request, retries once for a
+  network error or a server error, stops on HTTP 403 and 429, refuses more than 100 MB and uses nothing
+  whose SHA-256 differs from the pinned one. It is kept for good in the cache folder. The tests run with
   outside network access blocked.
 - **Attribution:** every answer has `source` (the database's title) and an `attribution` that says the text
   is an unofficial machine extraction, and every entry has its volume, PDF page and column.
 - **Personal data:** none. The entries quote published literature with the author's name, as the dictionary
   does; nothing about private people is returned or stored.
 - **Publisher contacted:** no (MCP-32).
-- **Decision:** go, local only, bring your own database.
+- **Decision:** go, local stdio only, with the database published as a release asset (MCP-34).
 
 `tests/` builds an invented dictionary in the layout of the real one; no line of the real dictionary is in
-this repository. To run the contract tests against your own database:
+this repository. To run the contract tests against your own database, and to check the published one:
 
 ```bash
 IZAHLI_DB=/path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/izahli

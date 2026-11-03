@@ -13,14 +13,14 @@ from .store import Store
 
 INSTRUCTIONS = (
     "The explanatory dictionary of the Azerbaijani language (Azərbaycan dilinin izahlı lüğəti, "
-    "four volumes), read from a database on this computer that the user extracted from their own "
-    "copy; the server ships no dictionary text. define looks a headword up and returns its "
+    "four volumes), read from a database on this computer: downloaded once from the project's "
+    "release page, or the file IZAHLI_DB names. define looks a headword up and returns its "
     "entries, search finds entries by the words in their text (a lookup by meaning), browse lists "
     "the entries around a headword in print order and read_entry reads the rest of a long entry. "
     "The dictionary lists base forms, not inflected ones: look up kitab, not kitabları. Entries "
     "are machine-extracted from PDFs and may contain errors; pages are PDF pages, not printed "
-    "ones. Cite the dictionary, not this server. The first call builds a local index and takes a "
-    "few seconds."
+    "ones. Cite the dictionary, not this server. The first call downloads the database and builds "
+    "a local index, which takes a few seconds."
 )
 READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
 MAX_INT = 2**31 - 1  # more than any dictionary has; keeps the numbers inside what SQLite takes

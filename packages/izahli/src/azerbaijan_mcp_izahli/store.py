@@ -7,9 +7,11 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 
-from . import index
+import httpx
+
+from . import database, index
 from . import text as rules
-from .errors import BadQuery, NotConfigured, NotFound
+from .errors import BadQuery, NotFound
 from .models import (
     Browse,
     Definition,
@@ -24,9 +26,9 @@ from .models import (
 )
 
 ATTRIBUTION = (
-    "{title}, read from a database its user extracted from the PDF text layer of the volumes. "
-    "This is an unofficial machine extraction and may contain errors: the printed dictionary is "
-    "the authority. Pages are PDF page numbers."
+    "{title}, read from a database extracted from the PDF text layer of the volumes. This is an "
+    "unofficial machine extraction and may contain errors: the printed dictionary is the "
+    "authority. Pages are PDF page numbers."
 )
 COLUMNS = "id, volume, page, col, headword, homonym, origin, text"
 MAX_ENTRIES = 12  # entries shown for one headword
@@ -41,31 +43,42 @@ BEYOND = "\U0010ffff"  # sorts after every character: the end of a prefix range
 
 
 class Store:
-    """The dictionary on this computer. The index is built on first use."""
+    """The dictionary on this computer. The database is downloaded and the index built on first
+    use, unless the source is a file the user names."""
 
-    def __init__(self, source: Path | None, cache: Path | None = None) -> None:
+    def __init__(
+        self,
+        source: Path | None,
+        cache: Path | None = None,
+        *,
+        data_url: str | None = None,
+        transport: httpx.BaseTransport | None = None,
+    ) -> None:
         self._source = source
         self._cache = cache or index.default_cache_dir()
+        self._data_url = data_url
+        self._transport = transport
         self._lock = threading.Lock()
         self._index: Path | None = None
         self._title = index.DEFAULT_TITLE
 
     @classmethod
     def from_env(cls) -> "Store":
+        """Read IZAHLI_DB (a database file of your own) and IZAHLI_DATA_URL (a mirror of the
+        published one), if set."""
         path = os.environ.get("IZAHLI_DB", "").strip()
-        return cls(Path(path).expanduser() if path else None)
+        url = os.environ.get("IZAHLI_DATA_URL", "").strip()
+        return cls(Path(path).expanduser() if path else None, data_url=url or None)
 
     # -- plumbing
 
     def _ready(self) -> Path:
         with self._lock:
             if self._index is None or not self._index.is_file():  # or the cache was deleted
-                if self._source is None:
-                    raise NotConfigured(
-                        "No dictionary database is set. Point IZAHLI_DB at the SQLite file of the "
-                        "dictionary; the README lists the tables it needs."
-                    )
-                path = index.ensure(self._source, self._cache)
+                source = self._source or database.ensure(
+                    self._cache, url=self._data_url, transport=self._transport
+                )
+                path = index.ensure(source, self._cache)
                 self._title = index.title(path)
                 self._index = path
             return self._index

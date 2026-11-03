@@ -1,10 +1,12 @@
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 
+import httpx
 import pytest
 
+from azerbaijan_mcp_izahli import database
 from azerbaijan_mcp_izahli import store as store_module
-from azerbaijan_mcp_izahli.errors import BadDatabase, BadQuery, NotConfigured, NotFound
+from azerbaijan_mcp_izahli.errors import BadDatabase, BadQuery, DownloadFailed, NotFound
 from azerbaijan_mcp_izahli.store import Store
 
 # Ids follow print order: KİTAB is 15, its neighbours İŞIQ 14 and KİTABÇA 16, AXÇA 5, AĞÇA 3.
@@ -426,16 +428,30 @@ def test_browse_reports_what_it_cannot_find(store):
 # -- the database and the index
 
 
-def test_without_a_database_every_question_says_how_to_set_one(tmp_path):
-    empty = Store(None, tmp_path)
+def test_when_the_database_cannot_be_downloaded_every_question_says_how_to_go_on(tmp_path, site):
+    server = site(httpx.Response(404))
+    lost = Store(None, tmp_path, transport=server.transport)
     for ask in (
-        lambda: empty.define("su", 500),
-        lambda: empty.search("su", 10, 0, False),
-        lambda: empty.browse("su", None, 1, 1),
-        lambda: empty.read_entry(1, 0, 500),
+        lambda: lost.define("su", 500),
+        lambda: lost.search("su", 10, 0, False),
+        lambda: lost.browse("su", None, 1, 1),
+        lambda: lost.read_entry(1, 0, 500),
     ):
-        with pytest.raises(NotConfigured, match="IZAHLI_DB"):
+        with pytest.raises(DownloadFailed, match="IZAHLI_DB"):
             ask()
+    assert len(server.requests) == 4  # each question tries again
+
+
+def test_without_IZAHLI_DB_the_published_database_is_downloaded_once(
+    tmp_path, site, asset_pack, monkeypatch
+):
+    monkeypatch.setattr(database, "DATA_SHA256", asset_pack.sha256)
+    server = site(lambda: httpx.Response(200, content=asset_pack.path.read_bytes()))
+    first = Store(None, tmp_path / "cache", transport=server.transport)
+    assert headwords(first.define("kitab", 500).entries) == ["KİTAB"]
+    later = Store(None, tmp_path / "cache", transport=server.transport)  # a new process
+    assert headwords(later.define("su", 500).entries) == ["SU"]
+    assert len(server.requests) == 1
 
 
 def test_the_store_reads_its_database_and_cache_from_the_environment(
@@ -446,7 +462,9 @@ def test_the_store_reads_its_database_and_cache_from_the_environment(
     assert headwords(Store.from_env().define("su", 500).entries) == ["SU"]
     assert len(list((tmp_path / "mine").glob("index-*.sqlite"))) == 1
     monkeypatch.delenv("IZAHLI_DB")
-    with pytest.raises(NotConfigured):
+    monkeypatch.setenv("IZAHLI_DATA_URL", "http://127.0.0.1:1/mirror.sqlite.gz")  # nothing listens
+    monkeypatch.setattr(database, "RETRY_DELAY", 0)
+    with pytest.raises(DownloadFailed, match=r"127\.0\.0\.1:1/mirror"):  # the mirror is asked
         Store.from_env().define("su", 500)
 
 

@@ -1,3 +1,4 @@
+import socket
 import sys
 
 import pytest
@@ -14,8 +15,16 @@ def entrypoint(**env: str) -> StdioTransport:
     return StdioTransport(command=sys.executable, args=["-m", "azerbaijan_mcp_izahli"], env=env)
 
 
-async def test_the_real_entrypoint_serves_tools_and_explains_a_missing_database(tmp_path):
-    async with Client(entrypoint(IZAHLI_CACHE_DIR=str(tmp_path))) as client:
+def closed_address() -> str:
+    """An address on this computer where nothing listens, so no real download is tried."""
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", 0))
+        return f"http://127.0.0.1:{probe.getsockname()[1]}/mirror.sqlite.gz"
+
+
+async def test_the_real_entrypoint_serves_tools_and_explains_a_database_it_cannot_get(tmp_path):
+    transport = entrypoint(IZAHLI_CACHE_DIR=str(tmp_path), IZAHLI_DATA_URL=closed_address())
+    async with Client(transport) as client:
         assert {tool.name for tool in await client.list_tools()} == TOOLS
         with pytest.raises(ToolError, match="IZAHLI_DB"):
             await client.call_tool("define", {"word": "su"})
