@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from azerbaijan_mcp_dict import index
+from azerbaijan_mcp_dict import files, index
 from azerbaijan_mcp_dict.store import Store
 
 pytestmark = pytest.mark.live
@@ -107,4 +107,11 @@ def test_the_longest_entries_can_be_read_to_the_end(real):
 def test_the_published_database_downloads_is_checked_and_answers(tmp_path):
     out = Store(None, tmp_path).define("kitab", 200)
     assert [entry.headword for entry in out.entries] == ["KİTAB"]
-    assert len(list(tmp_path.glob("dictionary-*.sqlite"))) == 1
+    (kept,) = tmp_path.glob("dictionary-*.sqlite")
+    (built,) = tmp_path.glob("index-*.sqlite")
+    # the check that spots a copy cut short must never judge the real database or its index so
+    assert files.is_whole_sqlite(kept)
+    assert files.is_whole_sqlite(built)
+    server = Store(None, tmp_path)  # a new process: both are kept, so nothing is fetched or built
+    assert [entry.headword for entry in server.define("kitab", 200).entries] == ["KİTAB"]
+    assert sorted(p.name for p in tmp_path.iterdir()) == sorted([kept.name, built.name])

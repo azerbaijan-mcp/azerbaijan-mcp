@@ -52,7 +52,9 @@ def ensure(
     sha256 = sha256 or DATA_SHA256
     target = cache / f"dictionary-{sha256[:12]}.sqlite"
     if target.is_file():
-        return target
+        if files.is_whole_sqlite(target):
+            return target
+        log.warning("The kept dictionary database %s is cut short: downloading it again", target)
     url = url or DATA_URL
     _check_url(url)
     try:
@@ -84,7 +86,8 @@ def ensure(
         try:
             files.move_into_place(plain, target)
         except PermissionError:
-            if not target.is_file():  # Windows will not replace a file another process has open
+            # Windows will not replace a file another process has open: use theirs if it is whole
+            if not files.is_whole_sqlite(target):
                 raise
     except OSError as exc:
         raise DownloadFailed(f"Cannot write the dictionary database in {cache}: {exc}") from exc

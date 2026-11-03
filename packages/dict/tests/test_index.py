@@ -12,6 +12,8 @@ import pytest
 from azerbaijan_mcp_dict import index
 from azerbaijan_mcp_dict.errors import BadDatabase
 
+CUTS = ["empty", "inside-the-header", "header-only", "half", "last-byte-missing"]
+
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -90,6 +92,51 @@ def test_an_index_that_cannot_be_read_is_replaced(source, tmp_path, entries, cou
     assert (path, len(count_builds)) == (target, 1)
     assert rows(path, "SELECT count(*) FROM entry")[0][0] == len(entries)
     assert [p.name for p in cache.iterdir()] == [target.name]  # no temporary file left
+
+
+@pytest.mark.parametrize("how", CUTS)
+def test_an_index_that_was_cut_short_is_built_again(
+    source, tmp_path, entries, count_builds, cut_to, how
+):
+    cache = tmp_path / "cache"
+    path = index.ensure(source, cache)
+    path.write_bytes(cut_to(path.read_bytes(), how))
+    assert index.ensure(source, cache) == path
+    assert len(count_builds) == 2
+    assert rows(path, "PRAGMA integrity_check") == [("ok",)]
+    assert rows(path, "SELECT count(*) FROM entry") == [(len(entries),)]
+    assert [p.name for p in cache.iterdir()] == [path.name]
+
+
+@pytest.mark.parametrize("how", ["half", "last-byte-missing"])
+def test_a_cut_short_index_is_copied_over_where_renames_are_refused(
+    source, tmp_path, entries, count_builds, cut_to, renames_refused, how
+):
+    cache = tmp_path / "cache"
+    path = index.ensure(source, cache)
+    path.write_bytes(cut_to(path.read_bytes(), how))
+    assert index.ensure(source, cache) == path
+    assert len(count_builds) == 2
+    assert rows(path, "PRAGMA integrity_check") == [("ok",)]
+    assert rows(path, "SELECT count(*) FROM entry") == [(len(entries),)]
+    assert [p.name for p in cache.iterdir()] == [path.name]
+
+
+@pytest.mark.parametrize("how", ["half", "last-byte-missing"])
+def test_an_index_that_another_process_is_still_copying_is_not_used(
+    source, tmp_path, cut_to, monkeypatch, how
+):
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    target = index.index_path(source, cache)
+
+    def other_process_half_way(temp, destination):
+        target.write_bytes(cut_to(Path(temp).read_bytes(), how))  # theirs, not all written
+        raise PermissionError("the file is in use")  # Windows will not replace an open file
+
+    monkeypatch.setattr(index.os, "replace", other_process_half_way)
+    with pytest.raises(BadDatabase, match="in use by another process"):
+        index.ensure(source, cache)
 
 
 def test_two_databases_get_an_index_each_in_one_cache_folder(tmp_path, make_source):

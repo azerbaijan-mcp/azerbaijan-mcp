@@ -1,10 +1,12 @@
 import errno
 import os
 import shutil
+import sqlite3
 import stat
 import string
 import sys
 import tempfile
+from contextlib import closing
 from pathlib import Path
 
 import pytest
@@ -12,6 +14,7 @@ import pytest
 from azerbaijan_mcp_dict import files
 
 PIECE = 1000  # the size the tests give the copy loop, so that a file takes several turns
+PAGE_SIZES = [512, 1024, 4096, 32768, 65536]
 
 
 def content(size: int) -> bytes:
@@ -179,6 +182,97 @@ def test_a_source_that_is_gone_is_an_error_and_the_old_file_stays(tmp_path, rena
     with pytest.raises(FileNotFoundError):
         files.move_into_place(tmp_path / "gone.tmp", target)
     assert target.read_bytes() == b"old"
+
+
+def make_database(path: Path, *, page_size: int = 4096, journal: str = "delete") -> Path:
+    """A real SQLite file of several pages, written by SQLite."""
+    rows = 4 * page_size // 100 + 100
+    with closing(sqlite3.connect(path)) as db:
+        db.execute(f"PRAGMA page_size = {page_size}")
+        db.execute(f"PRAGMA journal_mode = {journal}")
+        db.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, body TEXT)")
+        with db:
+            db.executemany(
+                "INSERT INTO t (body) VALUES (?)", [("x" * 100 + str(n),) for n in range(rows)]
+            )
+    return path
+
+
+@pytest.mark.parametrize("page_size", PAGE_SIZES)
+def test_a_whole_database_is_whole_whatever_its_page_size(tmp_path, page_size):
+    path = make_database(tmp_path / "db.sqlite", page_size=page_size)
+    assert path.stat().st_size // page_size >= 4  # several pages, so that the cuts below are cuts
+    assert files.is_whole_sqlite(path)
+
+
+@pytest.mark.parametrize("page_size", PAGE_SIZES)
+def test_a_database_cut_anywhere_is_not_whole(tmp_path, page_size):
+    whole = make_database(tmp_path / "db.sqlite", page_size=page_size).read_bytes()
+    pages = len(whole) // page_size
+    sizes = {0, 1, 15, 16, 99, 100, 101, page_size - 1, page_size, page_size + 1, len(whole) - 1}
+    sizes |= {n * page_size for n in range(pages)} | {
+        n * page_size - 1 for n in range(1, pages + 1)
+    }
+    cut = tmp_path / "cut.sqlite"
+    for size in sorted(s for s in sizes if 0 <= s < len(whole)):
+        cut.write_bytes(whole[:size])
+        assert not files.is_whole_sqlite(cut), f"cut at {size} of {len(whole)} bytes is whole"
+
+
+def test_a_database_with_room_after_its_last_page_is_still_whole(tmp_path):
+    path = make_database(tmp_path / "db.sqlite")
+    path.write_bytes(path.read_bytes() + b"\0" * 10_000)  # a file that was grown in chunks
+    assert files.is_whole_sqlite(path)
+
+
+def test_a_database_in_wal_mode_is_whole(tmp_path):
+    path = make_database(tmp_path / "wal.sqlite", journal="wal")
+    assert [p.name for p in tmp_path.iterdir()] == ["wal.sqlite"]  # the log was folded in
+    assert files.is_whole_sqlite(path)
+
+
+@pytest.mark.parametrize("how", ["counter-moved-on", "count-is-zero"])
+def test_a_page_count_that_is_not_current_is_not_trusted(tmp_path, how):
+    whole = bytearray(make_database(tmp_path / "db.sqlite").read_bytes())
+    if how == "counter-moved-on":  # a change that the page count in the header does not know of
+        whole[24:28] = (int.from_bytes(whole[24:28], "big") + 1).to_bytes(4, "big")
+    else:
+        whole[28:32] = bytes(4)
+    path = tmp_path / "unsure.sqlite"
+    path.write_bytes(bytes(whole))
+    assert files.is_whole_sqlite(path)
+    path.write_bytes(bytes(whole[: len(whole) // 2]))
+    assert files.is_whole_sqlite(path)  # no count to hold it to, so its first page is all it needs
+    path.write_bytes(bytes(whole[:200]))
+    assert not files.is_whole_sqlite(path)  # not even one page
+
+
+def test_a_file_that_is_not_sqlite_is_not_whole(tmp_path):
+    whole = make_database(tmp_path / "db.sqlite").read_bytes()
+    other_version = b"SQLite format 4\x00" + whole[16:]
+    path = tmp_path / "other"
+    for what, content in {
+        "empty": b"",
+        "text": b"x" * len(whole),
+        "zeros": bytes(len(whole)),
+        "another magic": other_version,
+    }.items():
+        path.write_bytes(content)
+        assert not files.is_whole_sqlite(path), what
+
+
+@pytest.mark.parametrize("page", [0, 100, 511, 513, 3000, 65535])
+def test_a_header_with_an_impossible_page_size_is_not_whole(tmp_path, page):
+    whole = bytearray(make_database(tmp_path / "db.sqlite").read_bytes())
+    whole[16:18] = page.to_bytes(2, "big")
+    path = tmp_path / "odd.sqlite"
+    path.write_bytes(bytes(whole))
+    assert not files.is_whole_sqlite(path)
+
+
+def test_a_missing_file_and_a_folder_are_not_whole(tmp_path):
+    assert not files.is_whole_sqlite(tmp_path / "nothing")
+    assert not files.is_whole_sqlite(tmp_path)
 
 
 def fixed_drives() -> list[Path]:
