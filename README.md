@@ -10,7 +10,7 @@ independently installable server per data source.
 | [azstat](packages/azstat) | `azerbaijan-mcp-azstat` | State Statistical Committee open data API: search about 1,800 statistical tables and read their data | v0.1 |
 | [utils](packages/utils) | `azerbaijan-mcp-utils` | Offline helpers: IBAN and phone checks, amounts in manat in words, Latin and Cyrillic transliteration, official holidays and working days | unreleased |
 | [eqanun](packages/eqanun) | `azerbaijan-mcp-eqanun` | [e-qanun.az](https://e-qanun.az) legal acts, local only: search acts and read articles with their amendment notes | unreleased |
-| [izahli](packages/izahli) | `azerbaijan-mcp-izahli` | Explanatory dictionary of Azerbaijani (four volumes), local only: look words up, search by meaning and browse in print order, from a database downloaded once to your computer | unreleased |
+| [dict](packages/dict) | `azerbaijan-mcp-dict` | Explanatory dictionary of Azerbaijani (four volumes), local only: look words up, search by meaning and browse in print order, from a database downloaded once to your computer | unreleased |
 
 Names: the GitHub organization and repository are `azerbaijan-mcp`, packages are
 `azerbaijan-mcp-<source>` and MCP Registry names are `io.github.azerbaijan-mcp/<source>`.

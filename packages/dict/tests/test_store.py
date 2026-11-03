@@ -4,10 +4,10 @@ from concurrent.futures import ThreadPoolExecutor
 import httpx
 import pytest
 
-from azerbaijan_mcp_izahli import database
-from azerbaijan_mcp_izahli import store as store_module
-from azerbaijan_mcp_izahli.errors import BadDatabase, BadQuery, DownloadFailed, NotFound
-from azerbaijan_mcp_izahli.store import Store
+from azerbaijan_mcp_dict import database
+from azerbaijan_mcp_dict import store as store_module
+from azerbaijan_mcp_dict.errors import BadDatabase, BadQuery, DownloadFailed, NotFound
+from azerbaijan_mcp_dict.store import Store
 
 # Ids follow print order: KİTAB is 15, its neighbours İŞIQ 14 and KİTABÇA 16, AXÇA 5, AĞÇA 3.
 
@@ -437,12 +437,12 @@ def test_when_the_database_cannot_be_downloaded_every_question_says_how_to_go_on
         lambda: lost.browse("su", None, 1, 1),
         lambda: lost.read_entry(1, 0, 500),
     ):
-        with pytest.raises(DownloadFailed, match="IZAHLI_DB"):
+        with pytest.raises(DownloadFailed, match="DICT_DB"):
             ask()
     assert len(server.requests) == 4  # each question tries again
 
 
-def test_without_IZAHLI_DB_the_published_database_is_downloaded_once(
+def test_without_DICT_DB_the_published_database_is_downloaded_once(
     tmp_path, site, asset_pack, monkeypatch
 ):
     monkeypatch.setattr(database, "DATA_SHA256", asset_pack.sha256)
@@ -457,12 +457,12 @@ def test_without_IZAHLI_DB_the_published_database_is_downloaded_once(
 def test_the_store_reads_its_database_and_cache_from_the_environment(
     monkeypatch, source_db, tmp_path
 ):
-    monkeypatch.setenv("IZAHLI_DB", str(source_db))
-    monkeypatch.setenv("IZAHLI_CACHE_DIR", str(tmp_path / "mine"))
+    monkeypatch.setenv("DICT_DB", str(source_db))
+    monkeypatch.setenv("DICT_CACHE_DIR", str(tmp_path / "mine"))
     assert headwords(Store.from_env().define("su", 500).entries) == ["SU"]
     assert len(list((tmp_path / "mine").glob("index-*.sqlite"))) == 1
-    monkeypatch.delenv("IZAHLI_DB")
-    monkeypatch.setenv("IZAHLI_DATA_URL", "http://127.0.0.1:1/mirror.sqlite.gz")  # nothing listens
+    monkeypatch.delenv("DICT_DB")
+    monkeypatch.setenv("DICT_DATA_URL", "http://127.0.0.1:1/mirror.sqlite.gz")  # nothing listens
     monkeypatch.setattr(database, "RETRY_DELAY", 0)
     with pytest.raises(DownloadFailed, match=r"127\.0\.0\.1:1/mirror"):  # the mirror is asked
         Store.from_env().define("su", 500)

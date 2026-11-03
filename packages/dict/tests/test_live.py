@@ -1,8 +1,8 @@
 """Contract tests against the real dictionary database. Run them with the database's path:
 
-    IZAHLI_DB=path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/izahli
+    DICT_DB=path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/dict
 
-Those that need the database are skipped when IZAHLI_DB is not set. The index goes to a temporary
+Those that need the database are skipped when DICT_DB is not set. The index goes to a temporary
 folder, and the database itself is opened read-only. The numbers are those of the four-volume
 dictionary. The last test uses the network: it downloads the published database, as a user's
 first call does.
@@ -14,17 +14,17 @@ from pathlib import Path
 
 import pytest
 
-from azerbaijan_mcp_izahli import index
-from azerbaijan_mcp_izahli.store import Store
+from azerbaijan_mcp_dict import index
+from azerbaijan_mcp_dict.store import Store
 
 pytestmark = pytest.mark.live
 
 
 @pytest.fixture(scope="module")
 def real(tmp_path_factory):
-    path = os.environ.get("IZAHLI_DB", "").strip()
+    path = os.environ.get("DICT_DB", "").strip()
     if not path:
-        pytest.skip("set IZAHLI_DB to the real dictionary database to run these tests")
+        pytest.skip("set DICT_DB to the real dictionary database to run these tests")
     source = Path(path)
     before = (source.stat().st_size, source.stat().st_mtime_ns)
     store = Store(source, tmp_path_factory.mktemp("index"))

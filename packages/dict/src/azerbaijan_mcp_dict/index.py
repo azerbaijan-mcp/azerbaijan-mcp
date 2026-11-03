@@ -58,8 +58,8 @@ INDEXES = "CREATE INDEX form_form ON form(form); CREATE INDEX form_plain ON form
 
 
 def default_cache_dir() -> Path:
-    """Where the index lives: IZAHLI_CACHE_DIR, or the user's cache folder."""
-    if override := os.environ.get("IZAHLI_CACHE_DIR", "").strip():
+    """Where the index lives: DICT_CACHE_DIR, or the user's cache folder."""
+    if override := os.environ.get("DICT_CACHE_DIR", "").strip():
         return Path(override).expanduser()
     if sys.platform == "win32":
         base = Path(os.environ.get("LOCALAPPDATA") or Path.home() / "AppData" / "Local")
@@ -67,7 +67,7 @@ def default_cache_dir() -> Path:
         base = Path.home() / "Library" / "Caches"
     else:
         base = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache")
-    return base / "azerbaijan-mcp" / "izahli"
+    return base / "azerbaijan-mcp" / "dict"
 
 
 def _uri(path: Path) -> str:
@@ -111,7 +111,7 @@ def ensure(source: Path, cache: Path) -> Path:
         cache.mkdir(parents=True, exist_ok=True)
     except OSError as exc:
         raise BadDatabase(
-            f"Cannot create the index folder {cache}: {exc}. Set IZAHLI_CACHE_DIR to a folder "
+            f"Cannot create the index folder {cache}: {exc}. Set DICT_CACHE_DIR to a folder "
             "that can be written."
         ) from exc
     remove_stale_temp(cache)

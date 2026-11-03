@@ -64,10 +64,10 @@ class Store:
 
     @classmethod
     def from_env(cls) -> "Store":
-        """Read IZAHLI_DB (a database file of your own) and IZAHLI_DATA_URL (a mirror of the
+        """Read DICT_DB (a database file of your own) and DICT_DATA_URL (a mirror of the
         published one), if set."""
-        path = os.environ.get("IZAHLI_DB", "").strip()
-        url = os.environ.get("IZAHLI_DATA_URL", "").strip()
+        path = os.environ.get("DICT_DB", "").strip()
+        url = os.environ.get("DICT_DATA_URL", "").strip()
         return cls(Path(path).expanduser() if path else None, data_url=url or None)
 
     # -- plumbing

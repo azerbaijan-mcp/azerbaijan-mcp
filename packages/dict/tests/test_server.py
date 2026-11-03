@@ -3,8 +3,8 @@ import pytest
 from fastmcp import Client
 from fastmcp.exceptions import ToolError
 
-from azerbaijan_mcp_izahli.server import create_server
-from azerbaijan_mcp_izahli.store import Store
+from azerbaijan_mcp_dict.server import create_server
+from azerbaijan_mcp_dict.store import Store
 
 pytestmark = pytest.mark.anyio
 
@@ -121,5 +121,5 @@ async def test_a_server_whose_database_cannot_be_downloaded_says_how_to_go_on(tm
     server = create_server(Store(None, tmp_path, transport=site(httpx.Response(404)).transport))
     async with Client(server) as mcp:
         assert {tool.name for tool in await mcp.list_tools()} == TOOLS
-    with pytest.raises(ToolError, match="IZAHLI_DB"):
+    with pytest.raises(ToolError, match="DICT_DB"):
         await call(server, "define", {"word": "su"})

@@ -8,8 +8,8 @@ from pathlib import Path
 
 import pytest
 
-from azerbaijan_mcp_izahli import index
-from azerbaijan_mcp_izahli.errors import BadDatabase
+from azerbaijan_mcp_dict import index
+from azerbaijan_mcp_dict.errors import BadDatabase
 
 
 def digest(path: Path) -> str:
@@ -232,12 +232,12 @@ def test_metadata_is_optional(tmp_path, make_source):
 def test_a_cache_folder_that_cannot_be_made_is_reported(tmp_path, source):
     blocker = tmp_path / "blocker"
     blocker.write_text("a file, not a folder")
-    with pytest.raises(BadDatabase, match="IZAHLI_CACHE_DIR"):
+    with pytest.raises(BadDatabase, match="DICT_CACHE_DIR"):
         index.ensure(source, blocker / "cache")
 
 
 def test_the_cache_folder_can_be_set(monkeypatch, tmp_path):
-    monkeypatch.setenv("IZAHLI_CACHE_DIR", str(tmp_path / "mine"))
+    monkeypatch.setenv("DICT_CACHE_DIR", str(tmp_path / "mine"))
     assert index.default_cache_dir() == tmp_path / "mine"
 
 
@@ -251,10 +251,10 @@ def test_the_cache_folder_can_be_set(monkeypatch, tmp_path):
     ],
 )
 def test_the_default_cache_folder_follows_the_platform(monkeypatch, platform, env, expected):
-    for name in ("IZAHLI_CACHE_DIR", "LOCALAPPDATA", "XDG_CACHE_HOME"):
+    for name in ("DICT_CACHE_DIR", "LOCALAPPDATA", "XDG_CACHE_HOME"):
         monkeypatch.delenv(name, raising=False)
     for name, value in env.items():
         monkeypatch.setenv(name, value)
     monkeypatch.setattr(sys, "platform", platform)
     monkeypatch.setattr(Path, "home", classmethod(lambda cls: Path("/home/me")))
-    assert index.default_cache_dir() == Path(expected) / "azerbaijan-mcp" / "izahli"
+    assert index.default_cache_dir() == Path(expected) / "azerbaijan-mcp" / "dict"

@@ -9,8 +9,8 @@ from pathlib import Path
 import httpx
 import pytest
 
-from azerbaijan_mcp_izahli import asset, index
-from azerbaijan_mcp_izahli.store import Store
+from azerbaijan_mcp_dict import asset, index
+from azerbaijan_mcp_dict.store import Store
 
 LOCAL_HOSTS = {"127.0.0.1", "::1", "localhost"}
 TITLE = "Invented test dictionary"
