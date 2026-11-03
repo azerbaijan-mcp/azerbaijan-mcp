@@ -1,3 +1,4 @@
+import errno
 import hashlib
 import os
 import shutil
@@ -178,6 +179,61 @@ def test_when_the_index_in_use_is_out_of_date_the_error_says_what_to_do(
     monkeypatch.setattr(index.os, "replace", refuse)
     with pytest.raises(BadDatabase, match="in use by another process"):
         index.ensure(source, cache)
+
+
+def test_where_renames_are_refused_the_index_is_copied_into_place(
+    source, tmp_path, entries, title, renames_refused, count_builds
+):
+    cache = tmp_path / "cache"
+    path = index.ensure(source, cache)
+    assert rows(path, "PRAGMA integrity_check") == [("ok",)]
+    assert rows(path, "SELECT count(*) FROM entry") == [(len(entries),)]
+    assert index.title(path) == title
+    assert [p.name for p in cache.iterdir()] == [path.name]  # no temporary file is left
+    assert index.ensure(source, cache) == path
+    assert len(count_builds) == 1  # a copied index is kept like any other
+    touch_later(source)  # a changed source: its new index is copied over the old one
+    assert index.ensure(source, cache) == path
+    assert len(count_builds) == 2
+    stamp = rows(path, "SELECT value FROM meta WHERE key = 'stamp'")
+    assert stamp == [(index.source_stamp(source),)]
+    assert rows(path, "PRAGMA integrity_check") == [("ok",)]
+    assert [p.name for p in cache.iterdir()] == [path.name]
+
+
+@pytest.mark.parametrize(
+    ("code", "reason"),
+    [(errno.ENOSPC, "No space left on device"), (errno.EIO, "Input/output error")],
+)
+def test_a_rename_that_fails_for_another_reason_is_reported_and_leaves_nothing(
+    source, tmp_path, monkeypatch, code, reason
+):
+    def fail(*_, **__):
+        raise OSError(code, reason)
+
+    monkeypatch.setattr(index.os, "replace", fail)
+    cache = tmp_path / "cache"
+    with pytest.raises(BadDatabase, match=rf"Cannot write the index in .*{reason}"):
+        index.ensure(source, cache)
+    assert list(cache.iterdir()) == []
+
+
+def test_a_copy_that_fails_leaves_no_half_index(source, tmp_path, renames_refused, monkeypatch):
+    cache = tmp_path / "cache"
+    target = index.index_path(source, cache)
+    written = []
+
+    def disk_fills_up(finished, out, *_):
+        out.write(finished.read(64))
+        out.flush()
+        written.append(target.stat().st_size)  # a half index is there, under the final name
+        raise OSError(errno.ENOSPC, "No space left on device")
+
+    monkeypatch.setattr(shutil, "copyfileobj", disk_fills_up)
+    with pytest.raises(BadDatabase, match="No space left on device"):
+        index.ensure(source, cache)
+    assert written == [64]
+    assert list(cache.iterdir()) == []
 
 
 def test_a_missing_source_is_reported_by_its_path(tmp_path):

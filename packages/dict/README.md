@@ -84,7 +84,7 @@ Three optional settings go in the client's `env`:
 |---|---|---|
 | `DICT_DB` | none | Path of a dictionary database of your own. The published one is then not downloaded. |
 | `DICT_DATA_URL` | the release page of this repository | A mirror of the published database, https only (http for this computer). Its SHA-256 is still checked. |
-| `DICT_CACHE_DIR` | the cache folder above | Where the database and the index are kept. |
+| `DICT_CACHE_DIR` | the cache folder above | Where the database and the index are kept. A folder where the system refuses renames works too, for example `%LOCALAPPDATA%` for a server the Claude desktop app starts on Windows (`WinError 17`): the files are copied into place instead. |
 
 ## The database
 

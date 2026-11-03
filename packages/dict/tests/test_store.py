@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import httpx
 import pytest
 
-from azerbaijan_mcp_dict import database
+from azerbaijan_mcp_dict import database, index
 from azerbaijan_mcp_dict import store as store_module
 from azerbaijan_mcp_dict.errors import BadDatabase, BadQuery, DownloadFailed, NotFound
 from azerbaijan_mcp_dict.store import Store
@@ -450,6 +450,25 @@ def test_without_DICT_DB_the_published_database_is_downloaded_once(
     first = Store(None, tmp_path / "cache", transport=server.transport)
     assert headwords(first.define("kitab", 500).entries) == ["KİTAB"]
     later = Store(None, tmp_path / "cache", transport=server.transport)  # a new process
+    assert headwords(later.define("su", 500).entries) == ["SU"]
+    assert len(server.requests) == 1
+
+
+def test_the_first_question_is_answered_where_renames_are_refused(
+    tmp_path, site, asset_pack, monkeypatch, renames_refused
+):
+    monkeypatch.setattr(database, "DATA_SHA256", asset_pack.sha256)
+    server = site(lambda: httpx.Response(200, content=asset_pack.path.read_bytes()))
+    cache = tmp_path / "cache"
+    first = Store(None, cache, transport=server.transport)
+    out = first.define("kitab", 500)
+    assert headwords(out.entries) == ["KİTAB"]
+    assert out.entries[0].text.startswith("is. [ər.] Yazılı")
+    kept = cache / f"dictionary-{asset_pack.sha256[:12]}.sqlite"
+    assert sorted(p.name for p in cache.iterdir()) == sorted(
+        [kept.name, index.index_path(kept, cache).name]
+    )
+    later = Store(None, cache, transport=server.transport)  # a new process
     assert headwords(later.define("su", 500).entries) == ["SU"]
     assert len(server.requests) == 1
 

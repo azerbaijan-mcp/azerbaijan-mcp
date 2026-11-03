@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 
 import httpx
 
-from . import __version__, index
+from . import __version__, files, index
 from .errors import DownloadFailed
 
 log = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ def ensure(
             )
         _unpack(packed, plain, max_database_bytes or MAX_DATABASE_BYTES)
         try:
-            os.replace(plain, target)
+            files.move_into_place(plain, target)
         except PermissionError:
             if not target.is_file():  # Windows will not replace a file another process has open
                 raise

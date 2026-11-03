@@ -18,6 +18,7 @@ import time
 from contextlib import closing, suppress
 from pathlib import Path
 
+from . import files
 from . import text as rules
 from .errors import BadDatabase
 
@@ -119,7 +120,7 @@ def ensure(source: Path, cache: Path) -> Path:
     try:
         _build(source, temp, stamp)
         try:
-            os.replace(temp, index)
+            files.move_into_place(temp, index)
         except PermissionError as exc:
             # Windows will not replace a file another process has open. If that process built the
             # same index meanwhile, use it.
