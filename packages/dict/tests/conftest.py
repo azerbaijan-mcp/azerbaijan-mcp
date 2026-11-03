@@ -1,6 +1,8 @@
 """Shared fixtures. Every dictionary entry here is invented for the tests, in the layout of the real
 dictionary (labels, line breaks, "bax" pointers); none of them is a line of the real one."""
 
+import errno
+import os
 import socket
 import sqlite3
 from collections.abc import Callable, Mapping, Sequence
@@ -174,6 +176,25 @@ def count_builds(monkeypatch) -> list[Path]:
 
     monkeypatch.setattr(index, "_build", build)
     return builds
+
+
+@pytest.fixture
+def renames_refused(monkeypatch) -> None:
+    """Every rename fails the way it does in a folder that Windows redirects for a packaged app,
+    such as the cache of a server the Claude desktop app starts: WinError 17, which Python reports
+    as EXDEV. Creating and copying files still works there."""
+
+    def refuse(source, destination, **_):
+        raise OSError(  # the 17 is the Windows error code; other systems ignore it
+            errno.EXDEV,
+            "The system cannot move the file to a different disk drive",
+            os.fspath(source),
+            17,
+            os.fspath(destination),
+        )
+
+    monkeypatch.setattr(os, "replace", refuse)
+    monkeypatch.setattr(os, "rename", refuse)
 
 
 @pytest.fixture(scope="session")

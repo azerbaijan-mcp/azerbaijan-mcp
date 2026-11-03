@@ -1,5 +1,7 @@
+import errno
 import gzip
 import hashlib
+import shutil
 import sqlite3
 from contextlib import closing
 
@@ -150,6 +152,71 @@ def test_when_another_process_kept_the_database_first_it_is_used(tmp_path, site,
     monkeypatch.setattr(database.os, "replace", other_process_wins)
     assert fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data)) == target
     assert sorted(p.name for p in tmp_path.iterdir()) == [target.name]
+
+
+def test_a_database_that_cannot_be_written_is_reported_and_nothing_is_left(
+    tmp_path, site, data, monkeypatch
+):
+    def denied(*_, **__):
+        raise PermissionError(errno.EACCES, "Access is denied")  # and no other process has the file
+
+    monkeypatch.setattr(database.os, "replace", denied)
+    with pytest.raises(
+        DownloadFailed, match=r"Cannot write the dictionary database in .*Access is denied"
+    ):
+        fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data))
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_where_renames_are_refused_the_database_is_copied_into_place(
+    tmp_path, site, data, renames_refused
+):
+    server = site(httpx.Response(200, content=data))
+    path = fetch(tmp_path, server, sha(data))
+    assert path == tmp_path / f"dictionary-{sha(data)[:12]}.sqlite"
+    assert path.read_bytes() == gzip.decompress(data)  # every byte of it, not just a readable file
+    with closing(sqlite3.connect(path)) as db:
+        assert db.execute("PRAGMA integrity_check").fetchall() == [("ok",)]
+    assert [p.name for p in tmp_path.iterdir()] == [path.name]  # no temporary file is left
+    assert fetch(tmp_path, server, sha(data)) == path
+    assert len(server.requests) == 1  # a kept database is not downloaded again
+
+
+@pytest.mark.parametrize(
+    ("code", "reason"),
+    [(errno.ENOSPC, "No space left on device"), (errno.EIO, "Input/output error")],
+)
+def test_a_rename_that_fails_for_another_reason_is_reported_and_leaves_nothing(
+    tmp_path, site, data, monkeypatch, code, reason
+):
+    def fail(*_, **__):
+        raise OSError(code, reason)
+
+    monkeypatch.setattr(database.os, "replace", fail)
+    with pytest.raises(
+        DownloadFailed, match=rf"Cannot write the dictionary database in .*{reason}"
+    ):
+        fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data))
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_a_copy_that_fails_leaves_no_half_database(
+    tmp_path, site, data, renames_refused, monkeypatch
+):
+    target = tmp_path / f"dictionary-{sha(data)[:12]}.sqlite"
+    written = []
+
+    def disk_fills_up(finished, out, *_):
+        out.write(finished.read(64))
+        out.flush()
+        written.append(target.stat().st_size)  # a half database is there, under the final name
+        raise OSError(errno.ENOSPC, "No space left on device")
+
+    monkeypatch.setattr(shutil, "copyfileobj", disk_fills_up)
+    with pytest.raises(DownloadFailed, match="No space left on device"):
+        fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data))
+    assert written == [64]
+    assert list(tmp_path.iterdir()) == []
 
 
 def test_the_pinned_address_and_checksum_have_the_shape_a_release_asset_needs():
