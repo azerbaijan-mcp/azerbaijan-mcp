@@ -5,12 +5,12 @@ class IzahliError(Exception):
     """The dictionary could not be read, or has no such entry."""
 
 
-class NotConfigured(IzahliError):
-    """No source database is set."""
-
-
 class BadDatabase(IzahliError):
     """The source database is missing, unreadable or not shaped the way this server expects."""
+
+
+class DownloadFailed(IzahliError):
+    """The dictionary database could not be downloaded."""
 
 
 class BadQuery(IzahliError):

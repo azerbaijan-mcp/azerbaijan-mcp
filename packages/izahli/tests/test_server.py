@@ -1,3 +1,4 @@
+import httpx
 import pytest
 from fastmcp import Client
 from fastmcp.exceptions import ToolError
@@ -116,8 +117,8 @@ async def test_a_word_of_the_highest_code_point_is_just_not_found(server):
     assert out["match"] == "none"
 
 
-async def test_a_server_without_a_database_says_how_to_set_one(tmp_path):
-    server = create_server(Store(None, tmp_path))
+async def test_a_server_whose_database_cannot_be_downloaded_says_how_to_go_on(tmp_path, site):
+    server = create_server(Store(None, tmp_path, transport=site(httpx.Response(404)).transport))
     async with Client(server) as mcp:
         assert {tool.name for tool in await mcp.list_tools()} == TOOLS
     with pytest.raises(ToolError, match="IZAHLI_DB"):

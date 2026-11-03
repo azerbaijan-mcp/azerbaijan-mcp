@@ -1,7 +1,7 @@
 [project]
 name = "azerbaijan-mcp-izahli"
 version = "0.1.0"
-description = "Local MCP server for the Azerbaijani explanatory dictionary: look words up, search by meaning and browse in print order, from a database on your own computer."
+description = "Local MCP server for the Azerbaijani explanatory dictionary: look words up, search by meaning and browse in print order, from a database kept on your own computer."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -19,6 +19,7 @@ classifiers = [
 ]
 dependencies = [
   "fastmcp>=4,<5",
+  "httpx>=0.27",
   "pydantic>=2.7",
 ]
 

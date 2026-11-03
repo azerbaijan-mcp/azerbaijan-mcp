@@ -2,8 +2,10 @@
 
     IZAHLI_DB=path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/izahli
 
-They are skipped when IZAHLI_DB is not set. The index goes to a temporary folder, and the
-database itself is opened read-only. The numbers are those of the four-volume dictionary.
+Those that need the database are skipped when IZAHLI_DB is not set. The index goes to a temporary
+folder, and the database itself is opened read-only. The numbers are those of the four-volume
+dictionary. The last test uses the network: it downloads the published database, as a user's
+first call does.
 """
 
 import os
@@ -100,3 +102,9 @@ def test_the_longest_entries_can_be_read_to_the_end(real):
         pieces.append(page.text)
         offset = page.next_offset
     assert sum(len(piece) for piece in pieces) + len(pieces) - 1 == length
+
+
+def test_the_published_database_downloads_is_checked_and_answers(tmp_path):
+    out = Store(None, tmp_path).define("kitab", 200)
+    assert [entry.headword for entry in out.entries] == ["KİTAB"]
+    assert len(list(tmp_path.glob("dictionary-*.sqlite"))) == 1

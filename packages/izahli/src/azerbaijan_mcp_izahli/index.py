@@ -114,7 +114,7 @@ def ensure(source: Path, cache: Path) -> Path:
             f"Cannot create the index folder {cache}: {exc}. Set IZAHLI_CACHE_DIR to a folder "
             "that can be written."
         ) from exc
-    _remove_stale_temp(cache)
+    remove_stale_temp(cache)
     temp = cache / f"{index.name}.{os.getpid()}.tmp"
     try:
         _build(source, temp, stamp)
@@ -135,10 +135,10 @@ def ensure(source: Path, cache: Path) -> Path:
     return index
 
 
-def _remove_stale_temp(cache: Path) -> None:
-    """Delete the half-written files that builds which were killed left behind."""
+def remove_stale_temp(cache: Path) -> None:
+    """Delete the half-written files that builds and downloads which were killed left behind."""
     cutoff = time.time() - STALE_TEMP_SECONDS
-    for leftover in cache.glob("index-*.tmp"):
+    for leftover in cache.glob("*.tmp"):
         with suppress(OSError):
             if leftover.stat().st_mtime < cutoff:
                 leftover.unlink()
@@ -161,7 +161,7 @@ def _current(index: Path, stamp: str) -> bool:
     return row is not None and row[0] == stamp
 
 
-def _read_source(source: Path) -> tuple[dict[str, str], list[tuple]]:
+def read_source(source: Path) -> tuple[dict[str, str], list[tuple]]:
     """The source's metadata and entries, after checking it has what the index needs."""
     try:
         with closing(connect(source)) as db:
@@ -196,7 +196,7 @@ def _read_source(source: Path) -> tuple[dict[str, str], list[tuple]]:
 
 
 def _build(source: Path, target: Path, stamp: str) -> None:
-    metadata, rows = _read_source(source)
+    metadata, rows = read_source(source)
     spelled = [rules.headword_forms(row[2]) for row in rows]
     vocabulary = rules.build_vocabulary(
         (row[4] for row in rows), (form for spellings in spelled for form in spellings)
