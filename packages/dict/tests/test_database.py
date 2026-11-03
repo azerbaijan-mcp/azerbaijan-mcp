@@ -6,10 +6,10 @@ from contextlib import closing
 import httpx
 import pytest
 
-from azerbaijan_mcp_izahli import database
-from azerbaijan_mcp_izahli.errors import DownloadFailed
+from azerbaijan_mcp_dict import database
+from azerbaijan_mcp_dict.errors import DownloadFailed
 
-URL = "https://release.test/izahli-dictionary.sqlite.gz"
+URL = "https://release.test/dict-1.sqlite.gz"
 
 
 def sha(data: bytes) -> str:
@@ -42,7 +42,7 @@ def test_the_request_says_who_makes_it(tmp_path, site, data):
     (request,) = server.requests
     assert (request.method, str(request.url)) == ("GET", URL)
     agent = request.headers["user-agent"]
-    assert agent.startswith("azerbaijan-mcp-izahli/")
+    assert agent.startswith("azerbaijan-mcp-dict/")
     assert database.PROJECT_URL in agent
 
 
@@ -64,7 +64,7 @@ def test_a_file_that_is_not_the_published_one_is_not_used(tmp_path, site, data):
 
 def test_a_database_that_is_not_published_yet_says_so_and_how_to_go_on(tmp_path, site, data):
     server = site(httpx.Response(404))
-    with pytest.raises(DownloadFailed, match=r"not published at .*\(HTTP 404\).*IZAHLI_DB"):
+    with pytest.raises(DownloadFailed, match=r"not published at .*\(HTTP 404\).*DICT_DB"):
         fetch(tmp_path, server, sha(data))
     assert len(server.requests) == 1
 
@@ -136,7 +136,7 @@ def test_only_https_addresses_are_used_but_this_computer_may_use_http(tmp_path, 
 def test_a_cache_folder_that_cannot_be_made_is_reported(tmp_path, site, data):
     blocker = tmp_path / "blocker"
     blocker.write_text("a file, not a folder")
-    with pytest.raises(DownloadFailed, match="IZAHLI_CACHE_DIR"):
+    with pytest.raises(DownloadFailed, match="DICT_CACHE_DIR"):
         fetch(blocker / "cache", site(httpx.Response(200, content=data)), sha(data))
 
 

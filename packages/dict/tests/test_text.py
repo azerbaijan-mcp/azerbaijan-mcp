@@ -2,8 +2,8 @@ import re
 
 import pytest
 
-from azerbaijan_mcp_izahli import text as rules
-from azerbaijan_mcp_izahli.text import Pointer
+from azerbaijan_mcp_dict import text as rules
+from azerbaijan_mcp_dict.text import Pointer
 
 EN_DASH = "\u2013"
 

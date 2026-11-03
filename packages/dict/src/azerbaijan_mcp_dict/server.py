@@ -14,7 +14,7 @@ from .store import Store
 INSTRUCTIONS = (
     "The explanatory dictionary of the Azerbaijani language (Azərbaycan dilinin izahlı lüğəti, "
     "four volumes), read from a database on this computer: downloaded once from the project's "
-    "release page, or the file IZAHLI_DB names. define looks a headword up and returns its "
+    "release page, or the file DICT_DB names. define looks a headword up and returns its "
     "entries, search finds entries by the words in their text (a lookup by meaning), browse lists "
     "the entries around a headword in print order and read_entry reads the rest of a long entry. "
     "The dictionary lists base forms, not inflected ones: look up kitab, not kitabları. Entries "
@@ -33,7 +33,7 @@ MAX_CHARS = Annotated[
 def create_server(store: Store | None = None) -> FastMCP:
     """Build the server. Tests pass a store over a small invented database."""
     dictionary = store or Store.from_env()
-    mcp = FastMCP(name="azerbaijan-mcp-izahli", instructions=INSTRUCTIONS)
+    mcp = FastMCP(name="azerbaijan-mcp-dict", instructions=INSTRUCTIONS)
 
     async def ask(function, *args):
         try:

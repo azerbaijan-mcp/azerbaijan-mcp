@@ -23,7 +23,7 @@ from .errors import DownloadFailed
 log = logging.getLogger(__name__)
 
 PROJECT_URL = "https://github.com/azerbaijan-mcp/azerbaijan-mcp"
-DATA_URL = f"{PROJECT_URL}/releases/download/izahli-data-1/izahli-dictionary-1.sqlite.gz"
+DATA_URL = f"{PROJECT_URL}/releases/download/dict-data-1/dict-1.sqlite.gz"
 DATA_SHA256 = "44515ffca32d7cefc9f659bbe1ecefa82dc6908f17b5d434daffd1f921162022"
 DATA_SIZE = 5_657_352  # bytes of the gzip file at DATA_URL, which DATA_SHA256 is the hash of
 MEGABYTE = 1024 * 1024
@@ -32,7 +32,7 @@ MAX_DATABASE_BYTES = 500 * MEGABYTE  # what the gzip file may expand to
 RETRY_DELAY = 1.0
 BLOCKED = {403, 429}
 LOOPBACK = {"127.0.0.1", "::1", "localhost"}
-HINT = "Download it by hand and point IZAHLI_DB at the file, or try again later."
+HINT = "Download it by hand and point DICT_DB at the file, or try again later."
 
 
 def ensure(
@@ -60,7 +60,7 @@ def ensure(
     except OSError as exc:
         raise DownloadFailed(
             f"Cannot create the folder {cache} for the dictionary database: {exc}. Set "
-            "IZAHLI_CACHE_DIR to a folder that can be written."
+            "DICT_CACHE_DIR to a folder that can be written."
         ) from exc
     index.remove_stale_temp(cache)
     packed = cache / f"{target.name}.{os.getpid()}.gz.tmp"
@@ -109,7 +109,7 @@ def _client(transport: httpx.BaseTransport | None) -> httpx.Client:
         timeout=httpx.Timeout(60.0, connect=10.0),
         follow_redirects=True,
         max_redirects=5,
-        headers={"User-Agent": f"azerbaijan-mcp-izahli/{__version__} (+{PROJECT_URL})"},
+        headers={"User-Agent": f"azerbaijan-mcp-dict/{__version__} (+{PROJECT_URL})"},
     )
 
 

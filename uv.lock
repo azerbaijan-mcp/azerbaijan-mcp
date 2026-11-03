@@ -13,8 +13,8 @@ resolution-markers = [
 members = [
     "azerbaijan-mcp-azstat",
     "azerbaijan-mcp-cbar",
+    "azerbaijan-mcp-dict",
     "azerbaijan-mcp-eqanun",
-    "azerbaijan-mcp-izahli",
     "azerbaijan-mcp-opendata",
     "azerbaijan-mcp-utils",
     "azerbaijan-mcp-workspace",
@@ -113,9 +113,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "azerbaijan-mcp-eqanun"
+name = "azerbaijan-mcp-dict"
 version = "0.1.0"
-source = { editable = "packages/eqanun" }
+source = { editable = "packages/dict" }
 dependencies = [
     { name = "fastmcp" },
     { name = "httpx" },
@@ -130,9 +130,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "azerbaijan-mcp-izahli"
+name = "azerbaijan-mcp-eqanun"
 version = "0.1.0"
-source = { editable = "packages/izahli" }
+source = { editable = "packages/eqanun" }
 dependencies = [
     { name = "fastmcp" },
     { name = "httpx" },

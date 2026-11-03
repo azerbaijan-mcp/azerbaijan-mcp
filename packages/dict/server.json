@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.azerbaijan-mcp/izahli",
+  "name": "io.github.azerbaijan-mcp/dict",
   "description": "Look up words in the Azerbaijani explanatory dictionary; downloads its database once (local only).",
   "repository": {
     "url": "https://github.com/azerbaijan-mcp/azerbaijan-mcp",
     "source": "github",
-    "subfolder": "packages/izahli"
+    "subfolder": "packages/dict"
   },
   "version": "0.1.0",
   "packages": [
     {
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
-      "identifier": "azerbaijan-mcp-izahli",
+      "identifier": "azerbaijan-mcp-dict",
       "version": "0.1.0",
       "runtimeHint": "uvx",
       "transport": {

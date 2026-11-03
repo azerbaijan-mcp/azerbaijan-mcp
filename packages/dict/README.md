@@ -1,6 +1,6 @@
-<!-- mcp-name: io.github.azerbaijan-mcp/izahli -->
+<!-- mcp-name: io.github.azerbaijan-mcp/dict -->
 
-# azerbaijan-mcp-izahli
+# azerbaijan-mcp-dict
 
 **Local-only** MCP server for the explanatory dictionary of the Azerbaijani language, *Azərbaycan dilinin
 izahlı lüğəti* (four volumes, about 45,000 entries). It looks words up, finds entries by what they say and
@@ -8,7 +8,7 @@ walks the dictionary in print order, with the volume, page and column of every e
 
 On first use the server downloads the dictionary's database once, 5.6 MB, from this project's release page and
 keeps it in your cache folder with a search index built from it. The dictionary is a copyrighted print work
-and the project has no licence for it: read *Data source and terms* below. Set `IZAHLI_DB` to use a database
+and the project has no licence for it: read *Data source and terms* below. Set `DICT_DB` to use a database
 of your own instead. The server runs on your computer and is never offered as a hosted service.
 
 ## Tools
@@ -54,8 +54,8 @@ Things worth knowing:
   `əsli lat.`); about 11,000 entries have one.
 - **The first call** downloads the database and builds the index, which takes a few seconds: about 10
   seconds and 30 MB of index for the whole dictionary. Both are kept in the cache folder
-  (`%LOCALAPPDATA%\azerbaijan-mcp\izahli` on Windows, `~/Library/Caches/azerbaijan-mcp/izahli` on macOS,
-  `~/.cache/azerbaijan-mcp/izahli` elsewhere) and reused until the database file changes. Each database gets
+  (`%LOCALAPPDATA%\azerbaijan-mcp\dict` on Windows, `~/Library/Caches/azerbaijan-mcp/dict` on macOS,
+  `~/.cache/azerbaijan-mcp/dict` elsewhere) and reused until the database file changes. Each database gets
   its own index file, so several can share the folder. A database you name is opened read-only and never
   written. The cache can be deleted at any time: the next call fetches and builds again.
 - **Not covered:** inflected forms (no morphology), and the dictionary's other editions and sibling
@@ -68,29 +68,29 @@ Add to your MCP client configuration (requires [uv](https://docs.astral.sh/uv/))
 ```json
 {
   "mcpServers": {
-    "izahli": {
+    "dict": {
       "command": "uvx",
-      "args": ["azerbaijan-mcp-izahli"]
+      "args": ["azerbaijan-mcp-dict"]
     }
   }
 }
 ```
 
-In Claude Code: `claude mcp add izahli -- uvx azerbaijan-mcp-izahli`.
+In Claude Code: `claude mcp add dict -- uvx azerbaijan-mcp-dict`.
 
 Three optional settings go in the client's `env`:
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `IZAHLI_DB` | none | Path of a dictionary database of your own. The published one is then not downloaded. |
-| `IZAHLI_DATA_URL` | the release page of this repository | A mirror of the published database, https only (http for this computer). Its SHA-256 is still checked. |
-| `IZAHLI_CACHE_DIR` | the cache folder above | Where the database and the index are kept. |
+| `DICT_DB` | none | Path of a dictionary database of your own. The published one is then not downloaded. |
+| `DICT_DATA_URL` | the release page of this repository | A mirror of the published database, https only (http for this computer). Its SHA-256 is still checked. |
+| `DICT_CACHE_DIR` | the cache folder above | Where the database and the index are kept. |
 
 ## The database
 
-The published database is the file `izahli-dictionary-1.sqlite.gz` of the release `izahli-data-1`: 45,353
+The published database is the file `dict-1.sqlite.gz` of the release `dict-data-1`: 45,353
 entries, 5,657,352 bytes, SHA-256 `44515ffca32d7cefc9f659bbe1ecefa82dc6908f17b5d434daffd1f921162022`, which
-the package pins, so a file that differs is never used. `python -m azerbaijan_mcp_izahli.asset source.sqlite
+the package pins, so a file that differs is never used. `python -m azerbaijan_mcp_dict.asset source.sqlite
 out.sqlite.gz` packs a database that way and prints the numbers to pin.
 
 A database of your own needs one table, `entries`, and the server reads only the columns below. A
@@ -131,7 +131,7 @@ folder. Answers to the checklist in the repository's [data policy](../../docs/da
   the risk of a complaint. The text is in that release asset only, never in the package, the repository or
   the tests. If the publisher, the authors or their heirs object, the asset is deleted promptly.
 - **robots.txt, rate limit and cache:** not applicable to a release file. The download sends the
-  User-Agent `azerbaijan-mcp-izahli/<version> (+<repository URL>)`, makes one request, retries once for a
+  User-Agent `azerbaijan-mcp-dict/<version> (+<repository URL>)`, makes one request, retries once for a
   network error or a server error, stops on HTTP 403 and 429, refuses more than 100 MB and uses nothing
   whose SHA-256 differs from the pinned one. It is kept for good in the cache folder. The tests run with
   outside network access blocked.
@@ -146,7 +146,7 @@ folder. Answers to the checklist in the repository's [data policy](../../docs/da
 this repository. To run the contract tests against your own database, and to check the published one:
 
 ```bash
-IZAHLI_DB=/path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/izahli
+DICT_DB=/path/to/azerbaycan_lugeti_1-4.sqlite uv run pytest -m live packages/dict
 ```
 
 Unofficial project, not affiliated with or endorsed by the publisher or the institute that compiled the

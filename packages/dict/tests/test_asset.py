@@ -6,9 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from azerbaijan_mcp_izahli import asset
-from azerbaijan_mcp_izahli.errors import BadDatabase
-from azerbaijan_mcp_izahli.store import Store
+from azerbaijan_mcp_dict import asset
+from azerbaijan_mcp_dict.errors import BadDatabase
+from azerbaijan_mcp_dict.store import Store
 
 COLUMNS = [
     "id",
@@ -101,4 +101,4 @@ def test_main_prints_what_to_pin(source_db, entries, tmp_path, capsys):
 
 def test_main_without_the_two_paths_says_how_to_use_it(capsys):
     assert asset.main([]) == 2
-    assert "python -m azerbaijan_mcp_izahli.asset" in capsys.readouterr().err
+    assert "python -m azerbaijan_mcp_dict.asset" in capsys.readouterr().err

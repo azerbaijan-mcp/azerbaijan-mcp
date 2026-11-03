@@ -1,7 +1,7 @@
 """The database as the project publishes it: the columns the server reads and the metadata,
 gzip-compressed. Anything the server can read as a source can be packed:
 
-    python -m azerbaijan_mcp_izahli.asset source.sqlite izahli-dictionary-1.sqlite.gz
+    python -m azerbaijan_mcp_dict.asset source.sqlite dict-1.sqlite.gz
 
 prints the entry count, the size and the SHA-256 that `database.py` pins.
 """
