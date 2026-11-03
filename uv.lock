@@ -114,7 +114,7 @@ requires-dist = [
 
 [[package]]
 name = "azerbaijan-mcp-dict"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "packages/dict" }
 dependencies = [
     { name = "fastmcp" },
