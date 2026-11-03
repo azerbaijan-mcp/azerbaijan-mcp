@@ -57,7 +57,9 @@ Things worth knowing:
   (`%LOCALAPPDATA%\azerbaijan-mcp\dict` on Windows, `~/Library/Caches/azerbaijan-mcp/dict` on macOS,
   `~/.cache/azerbaijan-mcp/dict` elsewhere) and reused until the database file changes. Each database gets
   its own index file, so several can share the folder. A database you name is opened read-only and never
-  written. The cache can be deleted at any time: the next call fetches and builds again.
+  written. The cache can be deleted at any time: the next call fetches and builds again. A file cut
+  short, because the process was killed while it was being copied into place, is noticed and fetched
+  or built again.
 - **Not covered:** inflected forms (no morphology), and the dictionary's other editions and sibling
   dictionaries.
 

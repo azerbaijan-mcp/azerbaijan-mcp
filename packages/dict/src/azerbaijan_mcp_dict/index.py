@@ -152,7 +152,7 @@ def title(index: Path) -> str:
 
 
 def _current(index: Path, stamp: str) -> bool:
-    if not index.is_file():
+    if not files.is_whole_sqlite(index):
         return False
     try:
         with closing(connect(index)) as db:

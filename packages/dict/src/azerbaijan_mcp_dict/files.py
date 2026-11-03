@@ -1,4 +1,4 @@
-"""Giving a finished file its final name."""
+"""Giving a finished file its final name, and telling a whole SQLite file from a cut-short one."""
 
 import errno
 import os
@@ -7,6 +7,8 @@ from contextlib import suppress
 from pathlib import Path
 
 CHUNK = 1 << 20
+SQLITE_MAGIC = b"SQLite format 3\x00"
+SQLITE_HEADER = 100
 
 
 def move_into_place(source: Path, target: Path) -> None:
@@ -33,3 +35,28 @@ def move_into_place(source: Path, target: Path) -> None:
             with suppress(OSError):
                 target.unlink()
             raise
+
+
+def is_whole_sqlite(path: Path) -> bool:
+    """Whether `path` is a SQLite file with all its pages, which a killed copy leaves it without.
+
+    The header gives the size of a page and how many pages the file has. The count is trusted only
+    when the header says it is current: the change counter and the version-valid-for number agree
+    (https://www.sqlite.org/fileformat2.html#in_header_database_size). Otherwise the file counts as
+    whole when its first page is there.
+    """
+    try:
+        with path.open("rb") as file:
+            header = file.read(SQLITE_HEADER)
+            size = os.fstat(file.fileno()).st_size
+    except OSError:
+        return False
+    if len(header) < SQLITE_HEADER or not header.startswith(SQLITE_MAGIC):
+        return False
+    page = int.from_bytes(header[16:18], "big")
+    page = 65536 if page == 1 else page
+    if not 512 <= page <= 65536 or page & (page - 1):
+        return False
+    pages = int.from_bytes(header[28:32], "big")
+    current = pages > 0 and header[24:28] == header[92:96]
+    return size >= (pages if current else 1) * page

@@ -198,6 +198,23 @@ def renames_refused(monkeypatch) -> None:
 
 
 @pytest.fixture(scope="session")
+def cut_to() -> Callable[[bytes, str], bytes]:
+    """The part of a file that a killed copy leaves behind, by how far it got."""
+
+    def cut(whole: bytes, how: str) -> bytes:
+        sizes = {
+            "empty": 0,
+            "inside-the-header": 60,
+            "header-only": 100,
+            "half": len(whole) // 2,
+            "last-byte-missing": len(whole) - 1,
+        }
+        return whole[: sizes[how]]
+
+    return cut
+
+
+@pytest.fixture(scope="session")
 def source_db(tmp_path_factory) -> Path:
     return write_source(tmp_path_factory.mktemp("source") / "dictionary.sqlite")
 

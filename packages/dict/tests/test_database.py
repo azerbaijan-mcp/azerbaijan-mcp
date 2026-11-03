@@ -4,6 +4,7 @@ import hashlib
 import shutil
 import sqlite3
 from contextlib import closing
+from pathlib import Path
 
 import httpx
 import pytest
@@ -12,6 +13,7 @@ from azerbaijan_mcp_dict import database
 from azerbaijan_mcp_dict.errors import DownloadFailed
 
 URL = "https://release.test/dict-1.sqlite.gz"
+CUTS = ["empty", "inside-the-header", "header-only", "half", "last-byte-missing"]
 
 
 def sha(data: bytes) -> str:
@@ -142,16 +144,80 @@ def test_a_cache_folder_that_cannot_be_made_is_reported(tmp_path, site, data):
         fetch(blocker / "cache", site(httpx.Response(200, content=data)), sha(data))
 
 
+def keep(tmp_path, data, content: bytes) -> Path:
+    """Put `content` where the server keeps the database that `data` unpacks to."""
+    target = tmp_path / f"dictionary-{sha(data)[:12]}.sqlite"
+    target.write_bytes(content)
+    return target
+
+
 def test_when_another_process_kept_the_database_first_it_is_used(tmp_path, site, data, monkeypatch):
+    whole = gzip.decompress(data)
     target = tmp_path / f"dictionary-{sha(data)[:12]}.sqlite"
 
     def other_process_wins(source, destination):
-        target.write_bytes(b"the other process's copy")
+        target.write_bytes(whole)  # the other process's copy, all of it
         raise PermissionError("the file is in use")  # Windows will not replace an open file
 
     monkeypatch.setattr(database.os, "replace", other_process_wins)
     assert fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data)) == target
+    assert target.read_bytes() == whole
     assert sorted(p.name for p in tmp_path.iterdir()) == [target.name]
+
+
+def test_a_kept_database_that_is_whole_is_used_without_a_download(tmp_path, site, data):
+    whole = gzip.decompress(data)
+    target = keep(tmp_path, data, whole)
+    server = site(httpx.Response(200, content=data))
+    assert fetch(tmp_path, server, sha(data)) == target
+    assert server.requests == []
+    assert target.read_bytes() == whole
+
+
+@pytest.mark.parametrize("how", CUTS)
+def test_a_kept_database_that_was_cut_short_is_downloaded_again(tmp_path, site, data, cut_to, how):
+    whole = gzip.decompress(data)
+    target = keep(tmp_path, data, cut_to(whole, how))
+    server = site(httpx.Response(200, content=data))
+    assert fetch(tmp_path, server, sha(data)) == target
+    assert target.read_bytes() == whole
+    assert len(server.requests) == 1
+    assert [p.name for p in tmp_path.iterdir()] == [target.name]
+
+
+def test_a_kept_file_that_is_not_sqlite_is_downloaded_again(tmp_path, site, data):
+    whole = gzip.decompress(data)
+    target = keep(tmp_path, data, b"x" * len(whole))  # the right size, the wrong content
+    server = site(httpx.Response(200, content=data))
+    assert fetch(tmp_path, server, sha(data)) == target
+    assert target.read_bytes() == whole
+    assert len(server.requests) == 1
+
+
+def test_a_cut_short_database_is_copied_over_where_renames_are_refused(
+    tmp_path, site, data, cut_to, renames_refused
+):
+    whole = gzip.decompress(data)
+    target = keep(tmp_path, data, cut_to(whole, "half"))
+    assert fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data)) == target
+    assert target.read_bytes() == whole
+    assert [p.name for p in tmp_path.iterdir()] == [target.name]
+
+
+def test_a_cut_short_database_that_another_process_holds_is_not_used(
+    tmp_path, site, data, cut_to, monkeypatch
+):
+    whole = gzip.decompress(data)
+    half = cut_to(whole, "half")
+    target = keep(tmp_path, data, half)
+
+    def in_use(*_, **__):
+        raise PermissionError(errno.EACCES, "the file is in use")
+
+    monkeypatch.setattr(database.os, "replace", in_use)
+    with pytest.raises(DownloadFailed, match="Cannot write the dictionary database"):
+        fetch(tmp_path, site(httpx.Response(200, content=data)), sha(data))
+    assert target.read_bytes() == half  # theirs is left as it was
 
 
 def test_a_database_that_cannot_be_written_is_reported_and_nothing_is_left(
